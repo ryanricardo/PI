@@ -4,17 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Jogador : ReferenciasJogador
+public class Jogador : MonoBehaviour
 {
+    [HideInInspector]public bool           viradoDireita;
+    [HideInInspector]public bool           abrigado; 
+    [HideInInspector]public bool           correndo;
+    [HideInInspector]public int            sequencia;
+    [HideInInspector]public int            vida               = 100;
+    [HideInInspector]public float          velocidade;
+    [HideInInspector]public Animator       anim;
+
+    public                  Image          vidaUI;
+    public                  Sprite[]       vidasSprite;    
+
     void Start()
     {
-        anim = GetComponent<Animator>();
+        anim       = GetComponent<Animator>();
         sequencia  = 0;
-        velocidade = 5; 
         vida       = 100;
     }
-
-    
     void Update()
     {
         Movimentacao();
@@ -23,25 +31,25 @@ public class Jogador : ReferenciasJogador
     void Movimentacao()
     {
         float translationX = Input.GetAxis("Horizontal");
-
         transform.Translate(new Vector2(translationX * velocidade * Time.deltaTime, 0f));
-
 
         if (Input.GetKey("left shift") )
         {
             anim.SetBool("correndo", true);
-            velocidade = 12;
+            velocidade = 8;
         } else 
         {
-            velocidade = 5;
+            velocidade = 5.5f;
             anim.SetBool("correndo", false);
         }
 
         if(translationX != 0)
         {
+            correndo = true;
             anim.SetBool("caminhando", true);
         } else
         {
+            correndo = false;
             anim.SetBool("caminhando", false);
         }
 
@@ -61,7 +69,6 @@ public class Jogador : ReferenciasJogador
         escala.x *= -1;
         transform.localScale = escala;
     }
-
 
     public void TomarDano(int dano)
     {

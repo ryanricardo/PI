@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +15,12 @@ public class Sons : MonoBehaviour
     }
     private void Update()
     {
+
+        if(Jogador.GetComponent<Jogador>().abrigado)
+        {
+            
+        }
+
         if(Jogador.GetComponent<Jogador>().abrigado)
         {
             som.pitch = 0.3f;

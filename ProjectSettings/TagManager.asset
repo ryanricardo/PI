@@ -8,6 +8,8 @@ TagManager:
   - Abrigado
   - Livro
   - Porta
+  - Desabrigado
+  - Inimigo
   layers:
   - Default
   - TransparentFX
