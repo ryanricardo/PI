@@ -8,18 +8,21 @@ public class JogadorInteragir : MonoBehaviour
     [HideInInspector]public bool           abrirPorta;
     [HideInInspector]public bool           lerLivro; 
     [HideInInspector]public bool           posicaoAtaque;
+    [HideInInspector]public int            armas;
     
-    public  GameObject Jogador;
+    public  GameObject jogador_;
     public  GameObject Inimigo;
     public  GameObject Faca;
 
     private bool     atacando;
+    private bool     ataque;
     private bool     facaAtingiu;
     private Animator anim;
 
     void Start()
     {
-        anim = GetComponent<Animator>();
+
+        anim  = GetComponent<Animator>();
     }
 
     void Update()
@@ -34,37 +37,36 @@ public class JogadorInteragir : MonoBehaviour
             abrirPorta = false;
         }
 
-        if(Input.GetKey(KeyCode.Mouse1))
+        if(Input.GetKeyDown(KeyCode.Alpha0))
         {
-            posicaoAtaque = true;
-            if(Jogador.GetComponent<Jogador>().correndo && posicaoAtaque)
-            {
-                anim.SetBool("atacando", false);
-                anim.SetBool("andando ataque01", true);
-            } else 
-            {
-                anim.SetBool("andando ataque01", false);
-            }
+            armas = 0;
+            anim.SetInteger("armas", 0);
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            armas = 1;
+            anim.SetInteger("armas", 1);
+        }
+
+        if(Input.GetMouseButton(1))
+        {
+            ataque = true;
+            anim.SetBool("ataque", true);
+        } else 
+        {
+            anim.SetBool("ataque", false);
+        }
+
+        if(Input.GetMouseButtonDown(0) && ataque)
+        {
+            anim.SetBool("ataque", false);
             anim.SetBool("atacando", true);
-
-        } else 
-        {
-            posicaoAtaque = false;
-            anim.SetBool("atacando", false);
-            anim.SetBool("andando ataque01", false);
-        }
-
-        if(posicaoAtaque && Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("Atacou");
             atacando = true;
-            anim.SetBool("ataque01", true);
         } else 
         {
-            atacando = false;
-            anim.SetBool("ataque01", false);
+            anim.SetBool("atacando", false);
         }
-
+        
         DanoFaca();
         
     }

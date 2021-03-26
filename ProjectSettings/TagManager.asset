@@ -10,6 +10,7 @@ TagManager:
   - Porta
   - Desabrigado
   - Inimigo
+  - "Ch\xE3o"
   layers:
   - Default
   - TransparentFX

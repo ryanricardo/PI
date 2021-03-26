@@ -2,26 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Porta : MonoBehaviour
 {
-    public GameObject Jogador;
-    private Animator anim;
+    private JogadorInteragir     jogador_;
+    private AudioSource          audioSource;
+    private Animator             anim;
+    public  GameObject           Colisor;
+
     [HideInInspector] public  bool colidio;
 
     void Start()
     {
-        anim = GetComponent<Animator>();
+        jogador_        = FindObjectOfType<JogadorInteragir>();
+        audioSource     = GetComponent<AudioSource>();
+        anim            = GetComponent<Animator>();
     }
 
     private void Update() 
     {
-        if(colidio && Jogador.GetComponent<JogadorInteragir>().abrirPorta)
-        {
+        if(colidio && jogador_.abrirPorta)
+        { 
+            audioSource.Play();
+            Colisor.GetComponent<Collider2D>().isTrigger = true;
             anim.SetBool("AbrirPorta", true);
+        } else if(colidio == false)
+        {
+            Colisor.GetComponent<Collider2D>().isTrigger = false;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.CompareTag("Player"))
         {

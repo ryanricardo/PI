@@ -5,20 +5,22 @@ using UnityEngine;
 public class Livro : MonoBehaviour
 {
     Animator animator;
-    public GameObject ImagemLivro;
-    public GameObject iconeLupa;
-    public GameObject Jogador;
-    private bool colidio;
+    public  GameObject         ImagemLivro;
+    public  GameObject         iconeLupa;
+
+    private JogadorInteragir   jogador_;
+    private bool               colidio;
 
     void Start()
     {
+        jogador_ = FindObjectOfType<JogadorInteragir>();
         animator = GetComponent<Animator>();
     }
 
 
     private void Update()
     {
-        if(Jogador.GetComponent<JogadorInteragir>().lerLivro && colidio)
+        if(jogador_.lerLivro && colidio)
         {
             ImagemLivro.SetActive(true);
         } else 

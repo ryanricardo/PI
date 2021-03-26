@@ -14,11 +14,17 @@ public class Jogador : MonoBehaviour
     [HideInInspector]public float          velocidade;
     [HideInInspector]public Animator       anim;
 
-    public                  Image          vidaUI;
-    public                  Sprite[]       vidasSprite;    
+    public                  float          forcaX;
+    public                  float          forcaY;
+
+    private JogadorInteragir  jogador_;
+    private Rigidbody2D rb2; 
+    private bool        chao;   
 
     void Start()
     {
+        jogador_   = FindObjectOfType<JogadorInteragir>();
+        rb2        = GetComponent<Rigidbody2D>();
         anim       = GetComponent<Animator>();
         sequencia  = 0;
         vida       = 100;
@@ -26,6 +32,7 @@ public class Jogador : MonoBehaviour
     void Update()
     {
         Movimentacao();
+        Pular();
     }
 
     void Movimentacao()
@@ -42,6 +49,7 @@ public class Jogador : MonoBehaviour
             velocidade = 5.5f;
             anim.SetBool("correndo", false);
         }
+
 
         if(translationX != 0)
         {
@@ -62,6 +70,16 @@ public class Jogador : MonoBehaviour
         }
     }
 
+    void Pular()
+    {
+        if(Input.GetButtonDown("Jump"))
+        {
+            rb2.AddForce(new Vector2(forcaX, forcaY), ForceMode2D.Impulse);
+            anim.SetBool("pulando", true);
+        } 
+
+    }
+
     void Flip()
     {
         viradoDireita = !viradoDireita;
@@ -73,9 +91,6 @@ public class Jogador : MonoBehaviour
     public void TomarDano(int dano)
     {
         vida -= dano;
-        sequencia++;
-        Debug.Log("sua vida esta em " + vida);
-        vidaUI.sprite = vidasSprite[sequencia];
     }
 
     public void OnTriggerEnter2D(Collider2D other)
@@ -83,7 +98,7 @@ public class Jogador : MonoBehaviour
         if(other.gameObject.CompareTag("Abrigado"))
         {
             abrigado = true;
-        } 
+        }
     }
 
     public void OnTriggerExit2D (Collider2D other)
@@ -92,5 +107,29 @@ public class Jogador : MonoBehaviour
         {
             abrigado = false;
         }
+    }
+
+    public void OnCollisionExit2D(Collision2D other)
+    {
+        if(other.gameObject.CompareTag("Chão"))
+        {
+            Debug.Log("saiu do chão");
+            chao = true;
+            anim.SetBool("pulando", true);
+            anim.SetBool("caindo", true);
+        } 
+    }
+
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.CompareTag("Chão"))
+        {
+            if(chao)
+            {
+                anim.SetBool("caindo", false);
+                anim.SetBool("encostando", true);
+                Debug.Log("entrou do chão");
+            }
+        } 
     }
 }

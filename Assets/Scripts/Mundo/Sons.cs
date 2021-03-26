@@ -6,25 +6,20 @@ using UnityEngine;
 public class Sons : MonoBehaviour
 {
     
-    public AudioSource som;
-    public GameObject  Jogador;
+    public  AudioSource som;
+    private Jogador     jogador_;
     
     private void Start()
     {
-        som = GetComponent<AudioSource>();
+        jogador_ = FindObjectOfType<Jogador>();
+        som      = GetComponent<AudioSource>();
     }
     private void Update()
     {
-
-        if(Jogador.GetComponent<Jogador>().abrigado)
-        {
-            
-        }
-
-        if(Jogador.GetComponent<Jogador>().abrigado)
+        if(jogador_.abrigado)
         {
             som.pitch = 0.3f;
-        } else if(Jogador.GetComponent<Jogador>().abrigado == false)
+        } else if(jogador_.abrigado == false)
         {
             som.pitch = 1f;
         }
