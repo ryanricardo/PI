@@ -10,16 +10,18 @@ public class Jogador : MonoBehaviour
     [HideInInspector]public bool           abrigado; 
     [HideInInspector]public bool           correndo;
     [HideInInspector]public int            sequencia;
+    [HideInInspector]public int            contagem;
     [HideInInspector]public int            vida               = 100;
     [HideInInspector]public float          velocidade;
     [HideInInspector]public Animator       anim;
 
+    public                  Transform      detectaChao;
     public                  float          forcaX;
     public                  float          forcaY;
-
+    
     private JogadorInteragir  jogador_;
-    private Rigidbody2D rb2; 
-    private bool        chao;   
+    private Rigidbody2D       rb2; 
+    private bool              tocaChao;
 
     void Start()
     {
@@ -27,18 +29,35 @@ public class Jogador : MonoBehaviour
         rb2        = GetComponent<Rigidbody2D>();
         anim       = GetComponent<Animator>();
         sequencia  = 0;
+        contagem   = 0;
         vida       = 100;
+        tocaChao   = false;
     }
     void Update()
     {
         Movimentacao();
         Pular();
+
+        tocaChao = Physics2D.Linecast(transform.position, detectaChao.position, 1 << LayerMask.NameToLayer("Chao"));
+        Debug.DrawLine(transform.position, detectaChao.position);
+
+
     }
 
     void Movimentacao()
     {
         float translationX = Input.GetAxis("Horizontal");
         transform.Translate(new Vector2(translationX * velocidade * Time.deltaTime, 0f));
+
+        if(Input.GetKeyDown(KeyCode.C) && !correndo && sequencia == 0)
+        {
+            sequencia += 1;
+            anim.SetBool("agachando", true);
+        } else if(Input.GetKeyDown(KeyCode.C) && sequencia == 1)
+        {
+            anim.SetBool("agachando", false);
+            sequencia = 0;
+        }
 
         if (Input.GetKey("left shift") )
         {
@@ -72,12 +91,22 @@ public class Jogador : MonoBehaviour
 
     void Pular()
     {
-        if(Input.GetButtonDown("Jump"))
+        if(Input.GetButtonDown("Jump") && tocaChao)
         {
-            rb2.AddForce(new Vector2(forcaX, forcaY), ForceMode2D.Impulse);
-            anim.SetBool("pulando", true);
+            Debug.Log("Pulou");
+            rb2.AddForce(new Vector2(0, forcaY), ForceMode2D.Impulse);
+            contagem += 1;
         } 
 
+        if(!tocaChao)
+        {
+            anim.SetBool("pulando", true);
+        } else 
+        {
+            anim.SetBool("pulando", false);
+        }
+
+        
     }
 
     void Flip()
@@ -107,29 +136,5 @@ public class Jogador : MonoBehaviour
         {
             abrigado = false;
         }
-    }
-
-    public void OnCollisionExit2D(Collision2D other)
-    {
-        if(other.gameObject.CompareTag("Chão"))
-        {
-            Debug.Log("saiu do chão");
-            chao = true;
-            anim.SetBool("pulando", true);
-            anim.SetBool("caindo", true);
-        } 
-    }
-
-    public void OnCollisionEnter2D(Collision2D other)
-    {
-        if(other.gameObject.CompareTag("Chão"))
-        {
-            if(chao)
-            {
-                anim.SetBool("caindo", false);
-                anim.SetBool("encostando", true);
-                Debug.Log("entrou do chão");
-            }
-        } 
     }
 }
