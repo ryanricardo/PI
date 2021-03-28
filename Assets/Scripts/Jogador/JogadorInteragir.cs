@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class JogadorInteragir : MonoBehaviour
 {   
@@ -13,11 +14,18 @@ public class JogadorInteragir : MonoBehaviour
     public  GameObject jogador_;
     public  GameObject Inimigo;
     public  GameObject Faca;
+    public  Image      Armas;
+    public  Sprite[]   spriteArmas;
 
     private bool     atacando;
     private bool     ataque;
     private bool     facaAtingiu;
     private Animator anim;
+
+    private void Awake() 
+    {
+        Armas.sprite = spriteArmas[0];
+    }
 
     void Start()
     {
@@ -41,11 +49,13 @@ public class JogadorInteragir : MonoBehaviour
         {
             armas = 0;
             anim.SetInteger("armas", 0);
+            Armas.sprite = spriteArmas[0];
         }
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             armas = 1;
             anim.SetInteger("armas", 1);
+            Armas.sprite = spriteArmas[1];
         }
 
         if(Input.GetMouseButton(1))
