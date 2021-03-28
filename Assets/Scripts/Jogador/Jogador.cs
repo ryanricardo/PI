@@ -11,6 +11,7 @@ public class Jogador : MonoBehaviour
     [HideInInspector]public bool           correndo;
     [HideInInspector]public bool           caminhando;
     [HideInInspector]public int            sequencia;
+    [HideInInspector]public bool           agachado;
     [HideInInspector]public int            numero;
     [HideInInspector]public int            vida               = 100;
     [HideInInspector]public Animator       anim;
@@ -60,14 +61,16 @@ public class Jogador : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.C) && sequencia == 0)
         {
             sequencia += 1;
+            agachado = true;
             anim.SetBool("agachando", true);
-        } else if(Input.GetKeyDown(KeyCode.C) && sequencia == 1 || caminhando)
+        } else if(Input.GetKeyDown(KeyCode.C) && sequencia == 1)
         {
+            agachado = false;
             anim.SetBool("agachando", false);
             sequencia = 0;
         }
 
-        if (Input.GetKey("left shift") && caminhando)
+        if (Input.GetKey("left shift") && caminhando && !agachado)
         {
             correndo = true;
             anim.SetBool("correndo", true);
