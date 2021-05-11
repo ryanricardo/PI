@@ -21,7 +21,7 @@ TagManager:
   - 
   - 
   - Chao
-  - 
+  - Player
   - 
   - 
   - 
@@ -47,4 +47,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 2619940107
     locked: 0

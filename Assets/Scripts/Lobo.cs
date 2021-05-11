@@ -13,6 +13,7 @@ public class Lobo : MonoBehaviour
 
 
     private Animator         animator;
+    private Rigidbody2D      rb2;
     public  Transform        raio;
 
 
@@ -26,6 +27,7 @@ public class Lobo : MonoBehaviour
         posicaoOriginal = transform.position;
         gameobjectJogador = GameObject.FindGameObjectWithTag("Player");
         jogador = FindObjectOfType<Jogador>();
+        rb2 = GetComponent<Rigidbody2D>();
         
     }
 
@@ -57,7 +59,7 @@ public class Lobo : MonoBehaviour
         Vector2 voltar = Vector2.MoveTowards(transform.position, posicaoOriginal, 5 * Time.deltaTime);
         transform.position = voltar;
         
-        if(transform.position.x == 75.08f)
+        if(rb2.velocity.x == 0f)
         {
             animator.SetBool("Correndo", false);
         }
@@ -94,7 +96,6 @@ public class Lobo : MonoBehaviour
                 animator.SetBool("Correndo", false);
                 animator.SetBool("Atacando", true);
                 EstadoAtual = EEstadosInimigos.Atacando;
-
             }
 
         } else 
