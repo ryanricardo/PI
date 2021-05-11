@@ -18,16 +18,18 @@ public class Jogador : MonoBehaviour
 
     public                  float          velocidade;
     public                  Transform      detectaChao;
-    public                  float          forcaX;
     public                  float          forcaY;
     
+    private Hud               hud;
     private JogadorInteragir  jogador_;
     private Rigidbody2D       rb2; 
     private bool              tocaChao;
+    private bool              perderVida;
 
     void Start()
     {
         jogador_   = FindObjectOfType<JogadorInteragir>();
+        hud        = FindObjectOfType<Hud>();
         rb2        = GetComponent<Rigidbody2D>();
         anim       = GetComponent<Animator>();
         sequencia  = 0;
@@ -43,7 +45,6 @@ public class Jogador : MonoBehaviour
         tocaChao = Physics2D.Linecast(transform.position, detectaChao.position, 1 << LayerMask.NameToLayer("Chao"));
         Debug.DrawLine(transform.position, detectaChao.position);
 
-
     }
 
     void Movimentacao()
@@ -51,12 +52,19 @@ public class Jogador : MonoBehaviour
         float translationX = Input.GetAxis("Horizontal");
         transform.Translate(new Vector2(translationX * velocidade * Time.deltaTime, 0f));
 
-        if(Input.GetButtonDown("Jump") && tocaChao && correndo && numero == 0)
+        if(Input.GetButtonDown("Jump") && tocaChao)
         {
-            Debug.Log("pulou");
             rb2.AddForce(new Vector2(0, forcaY), ForceMode2D.Impulse);
-            numero += 1;
         } 
+
+        if(!tocaChao)
+        {
+            anim.SetBool("pulando", true);
+
+        } else if (tocaChao)
+        {
+            anim.SetBool("pulando", false);
+        }
 
         if(Input.GetKeyDown(KeyCode.C) && sequencia == 0)
         {
@@ -101,20 +109,9 @@ public class Jogador : MonoBehaviour
         {
             Flip();
         }
-
-
-        if(!tocaChao)
-        {
-            anim.SetBool("pulando", true);
-        } else if(numero == 1)
-        {
-            anim.SetBool("pulando", false);
-            rb2.velocity = Vector2.zero;
-            numero = 0;
-        }
     }
 
-
+    
     void Flip()
     {
         viradoDireita = !viradoDireita;
@@ -133,6 +130,7 @@ public class Jogador : MonoBehaviour
         if(other.gameObject.CompareTag("Abrigado"))
         {
             abrigado = true;
+            hud.DesativaTempo();
         }
     }
 
@@ -141,6 +139,7 @@ public class Jogador : MonoBehaviour
         if(other.gameObject.CompareTag("Abrigado"))
         {
             abrigado = false;
+            hud.AtivaTempo();
         }
     }
 }

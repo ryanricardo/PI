@@ -11,16 +11,16 @@ public class JogadorInteragir : MonoBehaviour
     [HideInInspector]public bool           posicaoAtaque;
     [HideInInspector]public int            armas;
     
-    public  GameObject jogador_;
-    public  GameObject Inimigo;
     public  GameObject Faca;
     public  Image      Armas;
     public  Sprite[]   spriteArmas;
 
+    private OutroInimigo  inimigo_;
+    private Animator anim;
     private bool     atacando;
     private bool     ataque;
     private bool     facaAtingiu;
-    private Animator anim;
+
 
     private void Awake() 
     {
@@ -29,8 +29,8 @@ public class JogadorInteragir : MonoBehaviour
 
     void Start()
     {
-
-        anim  = GetComponent<Animator>();
+        inimigo_   = FindObjectOfType<OutroInimigo>();
+        anim       = GetComponent<Animator>();
     }
 
     void Update()
@@ -85,16 +85,11 @@ public class JogadorInteragir : MonoBehaviour
     {
         if(facaAtingiu && atacando)
         {
-            Inimigo.GetComponent<OutroInimigo>().TomarDano(10);
-        }
+            inimigo_.TomarDano(10);
     }
 
-    private void DanoArmaLeve(int dan)
-    {
 
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {   
         if(other.gameObject.CompareTag("Inimigo"))
         {
@@ -103,7 +98,7 @@ public class JogadorInteragir : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    void OnTriggerExit2D(Collider2D other)
     {
         if(other.gameObject.CompareTag("Inimigo"))
         {
@@ -114,4 +109,5 @@ public class JogadorInteragir : MonoBehaviour
 
     
 
+}
 }
