@@ -10,6 +10,7 @@ public class Jogador : MonoBehaviour
     [HideInInspector]public bool           abrigado; 
     [HideInInspector]public bool           correndo;
     [HideInInspector]public bool           caminhando;
+    [HideInInspector]public bool           tomarDano;
     [HideInInspector]public int            sequencia;
     [HideInInspector]public bool           agachado;
     [HideInInspector]public int            numero;
@@ -19,15 +20,17 @@ public class Jogador : MonoBehaviour
     public                  float          velocidade;
     public                  Transform      detectaChao;
     public                  float          forcaY;
+    public                  GameObject     faca;
     
     private Hud               hud;
     private JogadorInteragir  jogador_;
     private Rigidbody2D       rb2; 
     private bool              tocaChao;
-    private bool              perderVida;
+
 
     void Start()
     {
+        tomarDano  = false;
         jogador_   = FindObjectOfType<JogadorInteragir>();
         hud        = FindObjectOfType<Hud>();
         rb2        = GetComponent<Rigidbody2D>();
@@ -122,8 +125,13 @@ public class Jogador : MonoBehaviour
 
     public void TomarDano(int dano)
     {
-        vida -= dano;
+        if(tomarDano)
+        {
+           vida -= dano; 
+           tomarDano = false;
+        }
     }
+
 
     public void OnTriggerEnter2D(Collider2D other)
     {

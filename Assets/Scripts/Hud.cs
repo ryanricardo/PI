@@ -11,11 +11,15 @@ public class Hud : MonoBehaviour
     private Jogador jogador;
     private bool comeca;
     public  AudioSource musicao;
+    private Lobo lobo;
+    public Text corra;
+
     void Start()
     {
         jogador = FindObjectOfType<Jogador>();
         slider = FindObjectOfType<Slider>();
         comeca = false;
+        lobo = FindObjectOfType<Lobo>();
         cronometro = 31f;
     }
 

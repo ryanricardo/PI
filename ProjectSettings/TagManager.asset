@@ -11,6 +11,9 @@ TagManager:
   - Desabrigado
   - Inimigo
   - "Ch\xE3o"
+  - Inimigo1
+  - Inimigo2
+  - Inimigo3
   layers:
   - Default
   - TransparentFX

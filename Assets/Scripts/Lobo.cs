@@ -9,11 +9,14 @@ public class Lobo : MonoBehaviour
     private GameObject       gameobjectJogador;
     private int              layer_Jogador;
     private float            distancia;
+    private float            chronometer; 
     private Jogador          jogador;
 
 
     private Animator         animator;
     private Rigidbody2D      rb2;
+    [HideInInspector] public bool corra;
+    public  float            vida;
     public  Transform        raio;
 
 
@@ -21,6 +24,8 @@ public class Lobo : MonoBehaviour
 
     void Start()
     {
+        vida = 100;
+        chronometer = 0;
         animator = GetComponent<Animator>();
         layer_Jogador = LayerMask.GetMask("Player");
         EstadoAtual = EEstadosInimigos.Parado;
@@ -36,6 +41,10 @@ public class Lobo : MonoBehaviour
     {
         Raio();
 
+        if(vida <= 0)
+        {
+            Destroy(gameObject);
+        }
         switch(EstadoAtual)
         {
             case EEstadosInimigos.Parado:
@@ -74,9 +83,15 @@ public class Lobo : MonoBehaviour
 
     void Atacando()
     {
-        jogador.transform.position = new Vector2(-15.53f, -2.11f);
-        animator.SetBool("Atacando", false);  
-        jogador.vida -= 5; 
+        chronometer += Time.deltaTime;
+        if(chronometer > 1 && distancia < 2.5)
+        {
+            jogador.tomarDano = true;
+            jogador.TomarDano(20);
+            animator.SetBool("Atacando", false);
+            chronometer = 0;   
+        }
+
     }
 
     void Raio()
@@ -90,20 +105,26 @@ public class Lobo : MonoBehaviour
         if(Physics2D.Raycast(r.origin, r.direction, 10, layer_Jogador))
         {
             EstadoAtual = EEstadosInimigos.Perseguindo;
-
             if(distancia < 2.5)
             {
                 animator.SetBool("Correndo", false);
                 animator.SetBool("Atacando", true);
                 EstadoAtual = EEstadosInimigos.Atacando;
-            }
-
+            }  
+           
         } else 
         {
             EstadoAtual = EEstadosInimigos.Parado;
             animator.SetBool("Correndo", true);
         }
 
+    }
+
+    public void TomarDano()
+    {
+        Debug.Log(vida);
+        vida -= 50;
+        
     }
     
 
