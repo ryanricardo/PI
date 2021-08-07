@@ -28,18 +28,16 @@ public class CameraMain : MonoBehaviour
 
         if(Input.GetKey(KeyCode.A))
         {
-            for(float i = 10; i >= -10; i = i - Time.deltaTime)
-            {
-                Number = i;
-            }
+            
+            Number = -5;
+            
         }else 
         {
             if(Input.GetKey(KeyCode.D))
             {
-                for(float i = -10; i <= 10; i = i - Time.deltaTime)
-                {
-                    Number = i;
-                }
+                
+                Number = 5;
+                
             }
         }
 
