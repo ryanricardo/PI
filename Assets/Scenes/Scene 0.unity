@@ -5798,7 +5798,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300128, guid: 7810966f0f690954c87305933cabf2b0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6042,7 +6042,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300004, guid: 7810966f0f690954c87305933cabf2b0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -7204,7 +7204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0e9760b64e34e44b275e3973973e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Number: 0
+  Number: 5
 --- !u!1001 &1945259509
 PrefabInstance:
   m_ObjectHideFlags: 0
