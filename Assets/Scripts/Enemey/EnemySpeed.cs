@@ -1,32 +1,16 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemie : MonoBehaviour
+public class EnemySpeed : Enemie
 {
-    [HideInInspector]public Rigidbody2D         rb2;
-    [HideInInspector]public Animator            Animator;
-    [HideInInspector]public PlayerController    PlayerController;
-    [HideInInspector]public Transform           TransformPlayerController;
-    [HideInInspector]public Vector2             FollowPlayerController;
-    [HideInInspector]public bool                Right;
-    [HideInInspector]public bool                Attacking;
-    [HideInInspector]public float               distancePlayer;
-
-    public  int                 Life;
-    public bool                 Death;
-    public bool                 Hurt;
-    public string               CurrentStates;
-    public float                Damage;
-    public  float               Speed;
-
 
     void Start()
     {
-        Damage                      = 2;
+        Damage                      = 1;
         Attacking                   = false;
         Death                       = false;
-        Life                        = 4;
+        Life                        = 8;
         Right                       = true;
         Hurt                        = true;
         PlayerController            = FindObjectOfType<PlayerController>();
@@ -143,16 +127,16 @@ public class Enemie : MonoBehaviour
     IEnumerator HurtLoop()
     {
         Animator.SetInteger("Animation", 5);
-        Life -= 1;
-        yield return new WaitForSeconds(0.5f);
+        Life -= 2;
+        yield return new WaitForSeconds(0.2f);
         CurrentStates = "Attacking";
     }
     IEnumerator AttackingLoop()
     {
         Animator.SetInteger("Animation", 3);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.2f);
         Animator.SetInteger("Animation", 4);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.8f);
         Attacking = false;
     }
 
@@ -163,8 +147,4 @@ public class Enemie : MonoBehaviour
         Scale.x *= -1;
         transform.localScale = Scale;
     }
-
-
-    
-
 }

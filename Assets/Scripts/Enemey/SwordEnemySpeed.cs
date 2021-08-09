@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwordEnemie : MonoBehaviour
+public class SwordEnemySpeed : MonoBehaviour
 {
-    
     public Animator Animator;
     
     void Start()
@@ -22,7 +21,7 @@ public class SwordEnemie : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player") && Animator.GetInteger("Animation") == 4)
         {
-            StartCoroutine(other.gameObject.GetComponent<PlayerController>().Hit(1));
+            StartCoroutine(other.gameObject.GetComponent<PlayerController>().Hit(0.5f));
         }
     }
 }
