@@ -4,26 +4,24 @@ using UnityEngine;
 
 public class Enemie : MonoBehaviour
 {
-    [HideInInspector]public Rigidbody2D         rb2;
-    [HideInInspector]public Animator            Animator;
-    [HideInInspector]public PlayerController    PlayerController;
-    [HideInInspector]public Transform           TransformPlayerController;
-    [HideInInspector]public Vector2             FollowPlayerController;
-    [HideInInspector]public bool                Right;
-    [HideInInspector]public bool                Attacking;
-    [HideInInspector]public float               distancePlayer;
+    private Rigidbody2D         rb2;
+    private Animator            Animator;
+    private PlayerController    PlayerController;
+    private Transform           TransformPlayerController;
+    private Vector2             FollowPlayerController;
+    private bool                Right;
+    private bool                Attacking;
+    private float               distancePlayer;
 
     public  int                 Life;
     public bool                 Death;
     public bool                 Hurt;
     public string               CurrentStates;
-    public float                Damage;
     public  float               Speed;
 
 
     void Start()
     {
-        Damage                      = 2;
         Attacking                   = false;
         Death                       = false;
         Life                        = 4;
