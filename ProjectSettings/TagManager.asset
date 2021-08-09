@@ -4,16 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Volta
-  - Abrigado
-  - Livro
-  - Porta
-  - Desabrigado
-  - Inimigo
-  - "Ch\xE3o"
-  - Inimigo1
-  - Inimigo2
-  - Inimigo3
   - Enemie
   - SwordPlayer
   layers:

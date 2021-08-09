@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Enemie : MonoBehaviour
 {
+    [Header("Components")]
     private Rigidbody2D         rb2;
     private Animator            Animator;
     private PlayerController    PlayerController;
     private Transform           TransformPlayerController;
+
+    [Header("Variables")]
     private Vector2             FollowPlayerController;
     private bool                Right;
     private bool                Attacking;
@@ -119,15 +122,14 @@ public class Enemie : MonoBehaviour
     {
         if(distancePlayer <= 1 && !Attacking)
         {
-            Debug.Log("Ataca!");
             StartCoroutine(AttackingLoop());
             Attacking = true;
         }else 
         {
+            StopCoroutine(AttackingLoop());
             if(distancePlayer <= 5 && !Attacking)
             {
-                transform.position = FollowPlayerController; 
-                Animator.SetInteger("Animation", 1);
+               CurrentStates = "Stalking";
             }else if(!Attacking)
             {
                 CurrentStates = "Idle";
