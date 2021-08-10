@@ -7,6 +7,7 @@ public class CameraMain : MonoBehaviour
     [Header("Variables")]
     private Vector3             Direction;
     public  float               Number;
+    public  float               Speed;
     [Header("Components")]
     private PlayerController    PlayerController;
     private Transform           TransformPlayerController;
@@ -26,17 +27,17 @@ public class CameraMain : MonoBehaviour
         transform.position = new Vector3(PlayerController.transform.position.x + Number, 
         transform.position.y, -1);
 
-        if(Input.GetKey(KeyCode.A))
+        if(Input.GetKey(KeyCode.A) && Number >= -5)
         {
             
-            Number = -5;
+            Number -= Speed * Time.deltaTime;
             
         }else 
         {
-            if(Input.GetKey(KeyCode.D))
+            if(Input.GetKey(KeyCode.D) && Number <= 5)
             {
                 
-                Number = 5;
+                Number += Speed * Time.deltaTime;
                 
             }
         }

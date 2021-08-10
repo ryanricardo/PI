@@ -9,17 +9,20 @@ public class PlayerController : MonoBehaviour
     private                     Rigidbody2D     rb2;
     private                     Animator        Animator;
     public                      Transform       TransformCheckGround;
+    [Header("Inputs")]
+    [HideInInspector]public     bool            KeyCodeLControl;
+    [HideInInspector]public     bool            KeyCodeSpaceDown;
+    [HideInInspector]public     bool            KeyCodeEDown;
     [Header("Variables")]
     private                     bool            Right;
-    private                     bool            KeyCodeLControl;
-    private                     bool            KeyCodeSpaceDown;
     private                     float           AxisHorizontal;
     private                     RaycastHit2D    CheckGround;
     public                      float           Speed;
     public                      float           Life;
     public                      bool            Hurt;
-    [HideInInspector]           bool            Moviment;
+    [HideInInspector]public     bool            Moviment;
     [HideInInspector]public     bool            Death;
+    
 
     void Start()
     {
@@ -60,11 +63,11 @@ public class PlayerController : MonoBehaviour
             rb2.AddForce(transform.up * 7, ForceMode2D.Impulse);
         }
 
-        if(AxisHorizontal > 0 && !Right)
+        if(AxisHorizontal > 0 && !Right && Moviment)
         {
             Flip();
             Right = true;
-        }else if(AxisHorizontal < 0 && Right) 
+        }else if(AxisHorizontal < 0 && Right && Moviment) 
         {
             Flip();
             Right = false;
@@ -95,7 +98,7 @@ public class PlayerController : MonoBehaviour
             Animator.SetBool("Jump", false);
         }
 
-        if(AxisHorizontal != 0)
+        if(AxisHorizontal != 0 && Moviment)
         {
             Animator.SetBool("Run", true);
         }else if(AxisHorizontal == 0)
@@ -133,6 +136,14 @@ public class PlayerController : MonoBehaviour
         }else 
         {
             KeyCodeLControl = false;
+        }
+
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            KeyCodeEDown = true;
+        }else 
+        {
+            KeyCodeEDown = false;
         }
 
     }

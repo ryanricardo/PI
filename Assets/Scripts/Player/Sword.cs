@@ -24,5 +24,10 @@ public class Sword : MonoBehaviour
         {
             other.gameObject.GetComponent<Enemie>().CurrentStates = "Hurt";
         }
+
+        if(other.gameObject.CompareTag("EnemySpeed") && Animator.GetBool("Attack") == true)
+        {
+            other.gameObject.GetComponent<EnemySpeed>().CurrentStates = "Hurt";
+        }
     }
 }
