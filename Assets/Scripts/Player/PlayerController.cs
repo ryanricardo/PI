@@ -8,11 +8,15 @@ public class PlayerController : MonoBehaviour
     [Header("Components")]
     private                     Rigidbody2D     rb2;
     private                     Animator        Animator;
+    private                     AudioSource     AudioSource;
+    public                      AudioClip       SoundSword;
     public                      Transform       TransformCheckGround;
+    
     [Header("Inputs")]
     [HideInInspector]public     bool            KeyCodeLControl;
     [HideInInspector]public     bool            KeyCodeSpaceDown;
     [HideInInspector]public     bool            KeyCodeEDown;
+    
     [Header("Variables")]
     private                     bool            Right;
     private                     float           AxisHorizontal;
@@ -31,6 +35,7 @@ public class PlayerController : MonoBehaviour
         Death               = false;
         Right               = false;
         Life                = 2;
+        AudioSource         = GetComponent<AudioSource>();
         rb2                 = GetComponent<Rigidbody2D>();
         Animator            = GetComponent<Animator>();
     }
@@ -84,7 +89,7 @@ public class PlayerController : MonoBehaviour
             {
                 Animator.SetBool("Attack", true);
                 StartCoroutine(DesactiveAnimations(0.5f));
-            }
+            } 
         }else 
         {
             Animator.SetBool("CombatIdle", false);
@@ -93,9 +98,11 @@ public class PlayerController : MonoBehaviour
         if(!CheckGround)
         {
             Animator.SetBool("Jump", true);
+            Moviment = false;
         }else 
         {
             Animator.SetBool("Jump", false);
+            Moviment = true;
         }
 
         if(AxisHorizontal != 0 && Moviment)

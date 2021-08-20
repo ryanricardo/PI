@@ -27,7 +27,9 @@ public class Roberto : FunctionsNPCs
             PlayerController.Moviment = false;
             CountDialogue += 1;
             Dialogue();
-        } else if(CountDialogue == LimitCountDialogue)
+        }
+        
+        if(CountDialogue == LimitCountDialogue)
         {
             TextDialogue.gameObject.SetActive(false);
             PlayerController.Moviment = true;
