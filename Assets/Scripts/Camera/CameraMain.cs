@@ -5,11 +5,10 @@ using UnityEngine;
 public class CameraMain : MonoBehaviour
 {
     [Header("Variables")]
-    private Vector3             Direction;
-    public  float               Number;
-    public  float               Speed;
     public  float               Height;
+    public  float               Largure;
     [Header("Components")]
+    public  Camera              Camera;
     private PlayerController    PlayerController;
     private Transform           TransformPlayerController;
 
@@ -25,24 +24,10 @@ public class CameraMain : MonoBehaviour
     
     void Update()
     {
-        transform.position = new Vector3(PlayerController.transform.position.x + Number, 
+        transform.position = new Vector3(PlayerController.transform.position.x + Largure, 
         TransformPlayerController.transform.position.y + Height, -1);
 
-        if(Input.GetKey(KeyCode.A) && Number >= -5)
-        {
-            Number -= Speed * Time.deltaTime;
-            
-        }else 
-        {
-            if(Input.GetKey(KeyCode.D) && Number <= 5)
-            {
-                
-                Number += Speed * Time.deltaTime;
-                
-            }
-        }
-
-        
-        
+        if(Input.GetAxis("Mouse ScrollWheel") > 0f && Camera.orthographicSize >= 5){Camera.orthographicSize -= 1;}
+        if(Input.GetAxis("Mouse ScrollWheel") < 0f && Camera.orthographicSize <= 7){Camera.orthographicSize += 1;}
     }
 }

@@ -6,11 +6,11 @@ public class PlayerController : MonoBehaviour
 {
 
     [Header("Components")]
-    private                     Rigidbody2D     rb2;
     private                     Animator        Animator;
     private                     AudioSource     AudioSource;
     public                      AudioClip       SoundSword;
     public                      Transform       TransformCheckGround;
+    [HideInInspector]public     Rigidbody2D     rb2;
     
     [Header("Inputs")]
     [HideInInspector]public     bool            KeyCodeLControl;
@@ -20,10 +20,10 @@ public class PlayerController : MonoBehaviour
     [Header("Variables")]
     private                     bool            Right;
     private                     float           AxisHorizontal;
-    private                     RaycastHit2D    CheckGround;
     public                      float           Speed;
     public                      float           Life;
     public                      bool            Hurt;
+    [HideInInspector]public     RaycastHit2D    CheckGround;
     [HideInInspector]public     bool            Moviment;
     [HideInInspector]public     bool            Death;
     
@@ -84,9 +84,11 @@ public class PlayerController : MonoBehaviour
     {
         if(KeyCodeLControl)
         {
+            Moviment = false;
             Animator.SetBool("CombatIdle", true);
             if(KeyCodeSpaceDown)
             {
+                Moviment = false;
                 Animator.SetBool("Attack", true);
                 StartCoroutine(DesactiveAnimations(0.5f));
             } 
@@ -99,7 +101,7 @@ public class PlayerController : MonoBehaviour
         {
             Animator.SetBool("Jump", true);
             Moviment = false;
-        }else 
+        }else if(!Animator.GetBool("CombatIdle") && !Animator.GetBool("Attack"))
         {
             Animator.SetBool("Jump", false);
             Moviment = true;
@@ -115,9 +117,12 @@ public class PlayerController : MonoBehaviour
 
         if(Hurt)
         {
+            Moviment = false;
             Animator.SetBool("Hurt", true);
-        }else 
+        }else if(!Animator.GetBool("CombatIdle") && !Animator.GetBool("Attack") 
+        && CheckGround)
         {
+            Moviment = true;
             Animator.SetBool("Hurt", false);
         }
 
