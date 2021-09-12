@@ -11,15 +11,15 @@ public class Enemie : MonoBehaviour
     private Transform           TransformPlayerController;
 
     [Header("Variables")]
-    private Vector2             FollowPlayerController;
-    private bool                Right;
-    private bool                Attacking;
-    private float               distancePlayer;
-
-    public  int                 Life;
-    public bool                 Death;
+    public                      float               Damage;
+    public                      int                 Life;
+    public                      string              CurrentStates;
+    private                     bool                Right;
+    private                     bool                Attacking;
+    private                     float               distancePlayer;
+    private                     Vector2             FollowPlayerController;
+    [HideInInspector]public     bool                Death;
     public bool                 Hurt;
-    public string               CurrentStates;
     public  float               Speed;
 
 
@@ -27,7 +27,6 @@ public class Enemie : MonoBehaviour
     {
         Attacking                   = false;
         Death                       = false;
-        Life                        = 4;
         Right                       = true;
         Hurt                        = true;
         PlayerController            = FindObjectOfType<PlayerController>();

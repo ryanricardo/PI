@@ -6,9 +6,11 @@ public class SwordEnemie : MonoBehaviour
 {
     
     public Animator Animator;
+    private Enemie enemie;
+
     void Start()
     {
-        
+        enemie = FindObjectOfType<Enemie>();
     }
 
     
@@ -21,7 +23,7 @@ public class SwordEnemie : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player") && Animator.GetInteger("Animation") == 4)
         {
-            StartCoroutine(other.gameObject.GetComponent<PlayerController>().Hit(1));         
+            StartCoroutine(other.gameObject.GetComponent<PlayerController>().Hit(enemie.Damage));         
         }
     }
 }

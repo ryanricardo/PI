@@ -6,23 +6,24 @@ public class PlayerController : MonoBehaviour
 {
 
     [Header("Components")]
-    private                     Animator        Animator;
-    private                     AudioSource     AudioSource;
-    public                      AudioClip       SoundSword;
+    public                      Animator        Animator;
     public                      Transform       TransformCheckGround;
+    public                      AudioSource     AudioSource;
+    public                      AudioClip[]     Clips;
     [HideInInspector]public     Rigidbody2D     rb2;
     
     [Header("Inputs")]
-    [HideInInspector]public     bool            KeyCodeLControl;
-    [HideInInspector]public     bool            KeyCodeSpaceDown;
+    [HideInInspector]public     bool            MouseButtonFire0;
+    [HideInInspector]public     bool            MouseButtonFire1;
     [HideInInspector]public     bool            KeyCodeEDown;
+    [HideInInspector]public     bool            KeyCodeSpaceDown;
     
     [Header("Variables")]
     private                     bool            Right;
     private                     float           AxisHorizontal;
     public                      float           Speed;
     public                      float           Life;
-    public                      bool            Hurt;
+    [HideInInspector]public     bool            Hurt;
     [HideInInspector]public     RaycastHit2D    CheckGround;
     [HideInInspector]public     bool            Moviment;
     [HideInInspector]public     bool            Death;
@@ -35,7 +36,6 @@ public class PlayerController : MonoBehaviour
         Death               = false;
         Right               = false;
         Life                = 2;
-        AudioSource         = GetComponent<AudioSource>();
         rb2                 = GetComponent<Rigidbody2D>();
         Animator            = GetComponent<Animator>();
     }
@@ -57,12 +57,12 @@ public class PlayerController : MonoBehaviour
 
         if(Life <= 0)
         {
+            
             Death = true;
             Moviment = false;
         }
         
-        
-        if(KeyCodeSpaceDown && CheckGround && 
+        if(KeyCodeSpaceDown && CheckGround && !Hurt && 
         !Animator.GetBool("Attack") && !Animator.GetBool("CombatIdle"))
         {
             rb2.AddForce(transform.up * 7, ForceMode2D.Impulse);
@@ -82,11 +82,11 @@ public class PlayerController : MonoBehaviour
 
     void Animations()
     {
-        if(KeyCodeLControl)
+        if(MouseButtonFire1)
         {
             Moviment = false;
             Animator.SetBool("CombatIdle", true);
-            if(KeyCodeSpaceDown)
+            if(MouseButtonFire0)
             {
                 Moviment = false;
                 Animator.SetBool("Attack", true);
@@ -101,7 +101,8 @@ public class PlayerController : MonoBehaviour
         {
             Animator.SetBool("Jump", true);
             Moviment = false;
-        }else if(!Animator.GetBool("CombatIdle") && !Animator.GetBool("Attack"))
+        }else if(!Animator.GetBool("CombatIdle") && !Animator.GetBool("Attack") 
+        && !Animator.GetBool("Death"))
         {
             Animator.SetBool("Jump", false);
             Moviment = true;
@@ -119,8 +120,8 @@ public class PlayerController : MonoBehaviour
         {
             Moviment = false;
             Animator.SetBool("Hurt", true);
-        }else if(!Animator.GetBool("CombatIdle") && !Animator.GetBool("Attack") 
-        && CheckGround)
+        }else if(!Animator.GetBool("CombatIdle") && !Animator.GetBool("Attack")
+        && !Animator.GetBool("Death") && CheckGround)
         {
             Moviment = true;
             Animator.SetBool("Hurt", false);
@@ -130,10 +131,20 @@ public class PlayerController : MonoBehaviour
         {
             Animator.SetBool("Death", true);
         }
+
+        
     }
 
     void Inputs()
     {
+        if(Input.GetMouseButton(1))
+        {
+            MouseButtonFire1 = true;
+        }else 
+        {
+            MouseButtonFire1 = false;
+        }
+
         if(Input.GetKeyDown(KeyCode.Space))
         {
             KeyCodeSpaceDown = true;
@@ -142,12 +153,12 @@ public class PlayerController : MonoBehaviour
             KeyCodeSpaceDown = false;
         }
 
-        if(Input.GetKey(KeyCode.LeftControl))
+        if(Input.GetMouseButton(0))
         {
-            KeyCodeLControl = true;
+            MouseButtonFire0 = true;
         }else 
         {
-            KeyCodeLControl = false;
+            MouseButtonFire0 = false;
         }
 
         if(Input.GetKeyDown(KeyCode.E))
@@ -169,8 +180,10 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    
 
     // Functions
+    
 
     public IEnumerator DesactiveAnimations(float time)
     {
