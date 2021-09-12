@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 2107168189738589987}
   - component: {fileID: 2107168189738590012}
   - component: {fileID: 2107168189738590013}
+  - component: {fileID: 7089227410418050289}
   m_Layer: 0
   m_Name: Enemie
   m_TagString: Enemie
@@ -232,3 +233,23 @@ MonoBehaviour:
   Death: 0
   Hurt: 0
   Speed: 2
+--- !u!114 &7089227410418050289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107168189738589990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d0d0b19d66dc644c89aef497cf762a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeBots: 0
+  PlayerController: {fileID: 0}
+  TextDialogue: {fileID: 0}
+  DistancePlayer: 0
+  MinimiumDistance: 0
+  TypesDialogues: []
+  CountDialogue: 0
+  LimitCountDialogue: 0
