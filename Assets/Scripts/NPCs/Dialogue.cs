@@ -25,6 +25,7 @@ public class Dialogue : MonoBehaviour
     [Header("Components")]
     public  PlayerController    PlayerController;
     public  TextMeshProUGUI     TextDialogue;
+    public  GameObject          GameObjectTalk;
     [Header("Atributtes Distance")]
     public  float               DistancePlayer;
     public  float               MinimiumDistance;
@@ -56,20 +57,25 @@ public class Dialogue : MonoBehaviour
                 switch(StatesCurrent)
                 {
                     case EStates.NoTalking:
-
-                    if(DistancePlayer <= MinimiumDistance)
-                    StatesCurrent = EStates.Talking;
+                        TextDialogue.gameObject.SetActive(false);
+                        if(DistancePlayer <= MinimiumDistance && Play)
+                        StatesCurrent = EStates.Talking;
 
                     break;
 
                     case EStates.Talking:
+                        TextDialogue.gameObject.SetActive(true);
+                        GameObjectTalk.SetActive(false);
+                        if(Play)
+                        {
+                            StartCoroutine(StartTalking());
+                            FindObjectOfType<AudioController>().PlayMusic(0);
+                            Play = false;
+                        }else if(CountDialogue >= LimitCountDialogue)
+                        {StatesCurrent = EStates.NoTalking;}
                     break;
                 }
             break;
-
-
-
-
 
 
             case ETypeBots.Enemies:
@@ -77,6 +83,7 @@ public class Dialogue : MonoBehaviour
                 switch(StatesCurrent)
                 {
                     case EStates.NoTalking:
+
                         StopCoroutine(StartTalking());
                         TextDialogue.gameObject.SetActive(false);
                         if(DistancePlayer < MinimiumDistance)
@@ -88,8 +95,12 @@ public class Dialogue : MonoBehaviour
                     break;
 
                     case EStates.Talking:
-                    TextDialogue.gameObject.SetActive(true);
-                    if(Play){StartCoroutine(StartTalking()); Play = false;}
+                        TextDialogue.gameObject.SetActive(true);
+                        if(Play)
+                        {
+                            StartCoroutine(StartTalking()); 
+                            Play = false;
+                        }
                     
                     break;
                 }
@@ -104,21 +115,16 @@ public class Dialogue : MonoBehaviour
         DistancePlayer = Vector2.Distance(transform.position, PlayerController.transform.position);
     }
 
+ 
     IEnumerator StartTalking()
     {
-        yield return new WaitForSeconds(3);
-        if(CountDialogue != LimitCountDialogue)
+        do
         {
-            while(true)
-            {
-                yield return new WaitForSeconds(3);
-                CountDialogue += 1;
-                TextDialogue.text = TypesDialogues[CountDialogue];
-            }
-        }else if(CountDialogue >= LimitCountDialogue)
-        {
-            StatesCurrent = EStates.NoTalking;
-        }
+            yield return new WaitForSeconds(3);
+            CountDialogue += 1;
+            TextDialogue.text = TypesDialogues[CountDialogue];
+        }while(CountDialogue < LimitCountDialogue);
+
     }
 
     
