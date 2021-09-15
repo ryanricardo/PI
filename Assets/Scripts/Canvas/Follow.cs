@@ -6,6 +6,7 @@ public class Follow : MonoBehaviour
 {
     [SerializeField]private Transform Target;
     [SerializeField]private float PositionY;
+    [SerializeField]private float PositionX;
 
     void Start()
     {
@@ -15,7 +16,7 @@ public class Follow : MonoBehaviour
     
     void Update()
     {
-        transform.position = new Vector3(Target.transform.position.x, 
+        transform.position = new Vector3(Target.transform.position.x + PositionX, 
         PositionY, 1);
     }
 }

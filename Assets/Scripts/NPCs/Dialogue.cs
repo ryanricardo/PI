@@ -34,6 +34,7 @@ public class Dialogue : MonoBehaviour
     public  int                 CountDialogue;
     public  int                 LimitCountDialogue;
     public  bool                Play;
+    public  bool                StartTalk;
     
 
 
@@ -44,6 +45,7 @@ public class Dialogue : MonoBehaviour
         CountDialogue       = -1;
         LimitCountDialogue  = TypesDialogues.Length;
         StatesCurrent       = EStates.NoTalking;
+        GameObjectTalk.SetActive(true);
     }
 
     void Update()
@@ -58,7 +60,7 @@ public class Dialogue : MonoBehaviour
                 {
                     case EStates.NoTalking:
                         TextDialogue.gameObject.SetActive(false);
-                        if(DistancePlayer <= MinimiumDistance && Play)
+                        if(DistancePlayer <= MinimiumDistance && StartTalk)
                         StatesCurrent = EStates.Talking;
 
                     break;
@@ -66,11 +68,8 @@ public class Dialogue : MonoBehaviour
                     case EStates.Talking:
                         TextDialogue.gameObject.SetActive(true);
                         GameObjectTalk.SetActive(false);
-                        if(Play)
-                        {
-                            StartCoroutine(StartTalking());
-                            FindObjectOfType<AudioController>().PlayMusic(0);
-                            Play = false;
+                        if(StartTalk){StartCoroutine(StartTalking()); StartTalk = false;}
+                        if(Play){FindObjectOfType<AudioController>().PlayMusic(0); Play = false;
                         }else if(CountDialogue >= LimitCountDialogue)
                         {StatesCurrent = EStates.NoTalking;}
                     break;
@@ -96,11 +95,8 @@ public class Dialogue : MonoBehaviour
 
                     case EStates.Talking:
                         TextDialogue.gameObject.SetActive(true);
-                        if(Play)
-                        {
-                            StartCoroutine(StartTalking()); 
-                            Play = false;
-                        }
+                        if(StartTalk){StartCoroutine(StartTalking()); StartTalk = false;}
+                        if(Play){FindObjectOfType<AudioController>().PlayMusic(0); Play = false;}
                     
                     break;
                 }
