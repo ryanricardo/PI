@@ -43,7 +43,7 @@ public class Enemie : MonoBehaviour
         distancePlayer              = Vector2.Distance(transform.position, TransformPlayerController.transform.position);
         FollowPlayerController      = Vector2.MoveTowards(transform.position, TransformPlayerController.transform.position, Speed * Time.deltaTime);
         
-        if(PlayerController.Death){CurrentStates = "Empty";}
+        
 
         if((transform.position.x - TransformPlayerController.transform.position.x) < 0 && !Right)
         {
@@ -101,7 +101,7 @@ public class Enemie : MonoBehaviour
 
     void UpdateStalking()
     {
-        if(distancePlayer <= 1 && !PlayerController.Death)
+        if(distancePlayer <= 1)
         {
             CurrentStates = "Attacking";
         }else 

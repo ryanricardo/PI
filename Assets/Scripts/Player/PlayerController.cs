@@ -5,186 +5,119 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+    [Header("Atributtes Movimentation")]
+    [SerializeField]private float SpeedRun;
+    [SerializeField]public  float ForceJump;
+    [SerializeField]private bool  IsRight;
+    [SerializeField]private bool  CheckGround;
+    [SerializeField]public  bool  Moviment;
+    [SerializeField]public  bool  Dialogue;
+    [Header("Atributtes Life")]
+    [SerializeField]public  float Life;
+    [Header("Atributtes Extern")]
+    [SerializeField]private float TimeFallHeight;
+    [SerializeField]private bool  DamageHeight;
     [Header("Components")]
-    public                      Animator        Animator;
-    public                      Transform       TransformCheckGround;
-    public                      AudioSource     AudioSource;
-    public                      AudioClip[]     Clips;
-    [HideInInspector]public     Rigidbody2D     rb2;
-    
-    [Header("Inputs")]
-    [HideInInspector]public     bool            MouseButtonFire0;
-    [HideInInspector]public     bool            MouseButtonFire1;
-    [HideInInspector]public     bool            KeyCodeEDown;
-    [HideInInspector]public     bool            KeyCodeSpaceDown;
-    
-    [Header("Variables")]
-    private                     bool            Right;
-    private                     float           AxisHorizontal;
-    public                      float           Speed;
-    public                      float           Life;
-    [HideInInspector]public     bool            Hurt;
-    [HideInInspector]public     RaycastHit2D    CheckGround;
-    [HideInInspector]public     bool            Moviment;
-    [HideInInspector]public     bool            Death;
-    
+    [SerializeField]private PlayerControllerInputs PlayerControllerInputs;
+    [SerializeField]private Rigidbody2D            Rigidbody2D;
+    [SerializeField]private Animator               Animator;
+    [SerializeField]private Transform              TransformCheckGround;
 
     void Start()
     {
-        Moviment            = true;
-        Hurt                = false;
-        Death               = false;
-        Right               = false;
-        Life                = 2;
-        rb2                 = GetComponent<Rigidbody2D>();
-        Animator            = GetComponent<Animator>();
+        Dialogue               = false;
+        Moviment               = true;
+        IsRight                = false;
+        Animator               = GetComponent<Animator>();
+        Rigidbody2D            = GetComponent<Rigidbody2D>();
+        PlayerControllerInputs = GetComponent<PlayerControllerInputs>();
     }
+
+
+
+
 
     void Update()
     {
-        Actions();
-        Animations();
-        Inputs();
-        Variables();
+        Movimentation();
+        Combat();
+        //CheckDamageHeight();
+        CheckDeath();
     }
 
-    void Actions()
+
+    void Movimentation()
     {
-        if(Moviment)
-        {
-            rb2.velocity = new Vector2(AxisHorizontal * Speed, rb2.velocity.y);
-        }
 
-        if(Life <= 0)
-        {
-            
-            Death = true;
-            Moviment = false;
-        }
         
-        if(KeyCodeSpaceDown && CheckGround && !Hurt && 
-        !Animator.GetBool("Attack") && !Animator.GetBool("CombatIdle"))
-        {
-            rb2.AddForce(transform.up * 7, ForceMode2D.Impulse);
-        }
+        CheckGround = Physics2D.Linecast(
+        transform.position, 
+        TransformCheckGround.transform.position, 
+        1 << LayerMask.NameToLayer("Ground"));
 
-        if(AxisHorizontal > 0 && !Right && Moviment)
-        {
-            Flip();
-            Right = true;
-        }else if(AxisHorizontal < 0 && Right && Moviment) 
-        {
-            Flip();
-            Right = false;
-        }
-        
-    }
-
-    void Animations()
-    {
-        if(MouseButtonFire1)
-        {
-            Moviment = false;
-            Animator.SetBool("CombatIdle", true);
-            if(MouseButtonFire0)
-            {
-                Moviment = false;
-                Animator.SetBool("Attack", true);
-                StartCoroutine(DesactiveAnimations(0.5f));
-            } 
-        }else 
-        {
-            Animator.SetBool("CombatIdle", false);
-        }
+        if(Moviment && !Dialogue &&!Animator.GetBool("Attack") && !Animator.GetBool("CombatIdle") )
+        {Rigidbody2D.velocity = new Vector2(PlayerControllerInputs.AxisHorizontal * SpeedRun, 
+        Rigidbody2D.velocity.y);}
 
         if(!CheckGround)
-        {
-            Animator.SetBool("Jump", true);
-            Moviment = false;
-        }else if(!Animator.GetBool("CombatIdle") && !Animator.GetBool("Attack") 
-        && !Animator.GetBool("Death"))
-        {
-            Animator.SetBool("Jump", false);
-            Moviment = true;
-        }
+        {Animator.SetBool("Jump", true);}else
+        {Animator.SetBool("Jump", false);}
 
-        if(AxisHorizontal != 0 && Moviment)
-        {
-            Animator.SetBool("Run", true);
-        }else if(AxisHorizontal == 0)
-        {
-            Animator.SetBool("Run", false);
-        }
+        if(PlayerControllerInputs.KeySpace && CheckGround && !Dialogue)
+        {Rigidbody2D.AddForce(transform.up * ForceJump * Time.deltaTime, ForceMode2D.Impulse);
+        Animator.SetBool("Jump", true); Moviment = false;}
+        else if(CheckGround)
+        {Animator.SetBool("Jump", false); Moviment = true;}
 
-        if(Hurt)
-        {
-            Moviment = false;
-            Animator.SetBool("Hurt", true);
-        }else if(!Animator.GetBool("CombatIdle") && !Animator.GetBool("Attack")
-        && !Animator.GetBool("Death") && CheckGround)
-        {
-            Moviment = true;
-            Animator.SetBool("Hurt", false);
-        }
+        if(PlayerControllerInputs.AxisHorizontal != 0 && !Dialogue)
+        {Animator.SetBool("Run", true);}
+        else
+        {Animator.SetBool("Run", false);}
 
-        if(Death)
-        {
-            Animator.SetBool("Death", true);
-        }
-
-        
+        if(PlayerControllerInputs.AxisHorizontal > 0 && !IsRight && CheckGround 
+        && Moviment && !Dialogue)
+        {Flip(); IsRight = true;}
+        else 
+        if(PlayerControllerInputs.AxisHorizontal < 0 && IsRight && CheckGround)
+        {Flip(); IsRight = false;};
     }
-
-    void Inputs()
-    {
-        if(Input.GetMouseButton(1))
-        {
-            MouseButtonFire1 = true;
-        }else 
-        {
-            MouseButtonFire1 = false;
-        }
-
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            KeyCodeSpaceDown = true;
-        }else 
-        {
-            KeyCodeSpaceDown = false;
-        }
-
-        if(Input.GetMouseButton(0))
-        {
-            MouseButtonFire0 = true;
-        }else 
-        {
-            MouseButtonFire0 = false;
-        }
-
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            KeyCodeEDown = true;
-        }else 
-        {
-            KeyCodeEDown = false;
-        }
-
-    }
-
-    void Variables()
-    {
-        AxisHorizontal = Input.GetAxis("Horizontal");
-        
-        CheckGround = Physics2D.Linecast(transform.position, 
-        TransformCheckGround.transform.position, 1 << LayerMask.NameToLayer("Ground"));
-
-    }
-
     
+    void Combat()
+    {
+        if(Dialogue || !Moviment){return;}
 
-    // Functions
-    
+        if(PlayerControllerInputs.Mouse1)
+        {
+            Animator.SetBool("CombatIdle", true);
+            if(PlayerControllerInputs.Mouse0)
+            {Animator.SetBool("Attack", true);StartCoroutine(DesactiveAnimations(0.5f));}
+        }else 
+        {Animator.SetBool("CombatIdle", false);}
+    }
 
+    void CheckDeath()
+    {
+        if(Life <= 0)
+        {FunctionDeath();}
+    }
+
+    /*void CheckDamageHeight()
+    {
+        if(!CheckGround)
+        {TimeFallHeight += 2 * Time.deltaTime; 
+        }else if(CheckGround && !DamageHeight)
+        {TimeFallHeight = 0;}
+
+        if(TimeFallHeight >= 3)
+        {
+            DamageHeight = true;
+            if(CheckGround)
+            {Hit(TimeFallHeight * 3); TimeFallHeight = 0; DamageHeight = false;}
+        }
+        
+    }*/
+
+    //Functions
     public IEnumerator DesactiveAnimations(float time)
     {
         yield return new WaitForSeconds(time);
@@ -192,16 +125,28 @@ public class PlayerController : MonoBehaviour
         StopCoroutine(DesactiveAnimations(0));
     }
 
-    public IEnumerator Hit(float Damage)
+    public void FunctionDeath()
     {
+        Animator.SetBool("Death", true);
         Moviment = false;
-        Life -= Damage;
-        Hurt = true;
-        yield return new WaitForSeconds(1);
-        Hurt = false;
-        Moviment = true;
     }
-    
+
+    public void Hit(float damage)
+    {
+        Life -= damage;
+        Debug.Log(Life);
+    }
+
+    public void StartDialogue()
+    {
+        Rigidbody2D.velocity = Vector2.zero;
+        Animator.SetBool("Run", false);
+        Moviment = false;
+        Dialogue = true;
+    }
+
+
+
 
     void Flip()
     {

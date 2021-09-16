@@ -10,22 +10,17 @@ public class Dialogue : MonoBehaviour
         Talking,
         NoTalking,
     }
-
-    public enum ETypeBots
-    {
-        NPCs,
-        Enemies,
-    }
     
 
 
     [Header("States")]
     public  EStates             StatesCurrent;
-    public  ETypeBots           TypeBots;
     [Header("Components")]
     public  PlayerController    PlayerController;
     public  TextMeshProUGUI     TextDialogue;
     public  GameObject          GameObjectTalk;
+    [Header("Atributtes Object")]
+    [SerializeField]private string NameObject;
     [Header("Atributtes Distance")]
     public  float               DistancePlayer;
     public  float               MinimiumDistance;
@@ -33,8 +28,13 @@ public class Dialogue : MonoBehaviour
     public  string[]            TypesDialogues;
     public  int                 CountDialogue;
     public  int                 LimitCountDialogue;
-    public  bool                Play;
+    public  float               TimeNextDialogue;
+    public  bool                PlayMusic;
     public  bool                StartTalk;
+    public  bool                PlayOneTime;
+    [Header("Atributtes Audio")]
+    [SerializeField]private int Music;
+    
     
 
 
@@ -51,59 +51,30 @@ public class Dialogue : MonoBehaviour
     void Update()
     {
         Observer();
-        switch(TypeBots)
+
+        switch(StatesCurrent)
         {
-
-
-            case ETypeBots.NPCs:
-                switch(StatesCurrent)
-                {
-                    case EStates.NoTalking:
-                        TextDialogue.gameObject.SetActive(false);
-                        if(DistancePlayer <= MinimiumDistance && StartTalk)
-                        StatesCurrent = EStates.Talking;
-
-                    break;
-
-                    case EStates.Talking:
-                        TextDialogue.gameObject.SetActive(true);
-                        GameObjectTalk.SetActive(false);
-                        if(StartTalk){StartCoroutine(StartTalking()); StartTalk = false;}
-                        if(Play){FindObjectOfType<AudioController>().PlayMusic(0); Play = false;
-                        }else if(CountDialogue >= LimitCountDialogue)
-                        {StatesCurrent = EStates.NoTalking;}
-                    break;
-                }
+            case EStates.NoTalking:
+                if(PlayOneTime)
+                {PlayerController.Dialogue = false; PlayerController.Moviment = true; PlayOneTime = false;}
+                TextDialogue.gameObject.SetActive(false);
+                if(DistancePlayer <= MinimiumDistance && StartTalk)
+                StatesCurrent = EStates.Talking;
             break;
 
-
-            case ETypeBots.Enemies:
-            
-                switch(StatesCurrent)
-                {
-                    case EStates.NoTalking:
-
-                        StopCoroutine(StartTalking());
-                        TextDialogue.gameObject.SetActive(false);
-                        if(DistancePlayer < MinimiumDistance)
-                        {
-                            StatesCurrent = EStates.Talking;
-                        }
-                        
-
-                    break;
-
-                    case EStates.Talking:
-                        TextDialogue.gameObject.SetActive(true);
-                        if(StartTalk){StartCoroutine(StartTalking()); StartTalk = false;}
-                        if(Play){FindObjectOfType<AudioController>().PlayMusic(0); Play = false;}
-                    
-                    break;
-                }
+            case EStates.Talking:
+                PlayOneTime = true;
+                PlayerController.StartDialogue();
+                TextDialogue.gameObject.SetActive(true);
+                GameObjectTalk.SetActive(false);
+                if(StartTalk){StartCoroutine(StartTalking()); StartTalk = false;}
+                if(PlayMusic){FindObjectOfType<AudioController>().PlayMusic(Music); PlayMusic = false;
+                }else if(CountDialogue >= LimitCountDialogue)
+                {StatesCurrent = EStates.NoTalking;}
             break;
+
         }
     }
-
     // Functions
 
     void Observer()
@@ -116,9 +87,9 @@ public class Dialogue : MonoBehaviour
     {
         do
         {
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(TimeNextDialogue);
             CountDialogue += 1;
-            TextDialogue.text = TypesDialogues[CountDialogue];
+            TextDialogue.text = NameObject + ": " + TypesDialogues[CountDialogue];
         }while(CountDialogue < LimitCountDialogue);
 
     }

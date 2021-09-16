@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class AudioController : MonoBehaviour
 {
-
+    [Header("Components")]
+    public BoxCollider2D TriggerMusic;
+    [Header("Atributtes AudioController")]
     public  AudioSource SourceMusic;
     public  AudioSource SourceAmbient;
     
@@ -47,4 +49,6 @@ public class AudioController : MonoBehaviour
             Play[1] = false;
         }
     }
+
+
 }
