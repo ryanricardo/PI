@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +7,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Atributtes Movimentation")]
     [SerializeField]private float SpeedRun;
+    [SerializeField]private float StartSpeedRun;
     [SerializeField]public  float ForceJump;
+    [SerializeField]public  float MovimentationJump;
     [SerializeField]private bool  IsRight;
     [SerializeField]private bool  CheckGround;
     [SerializeField]public  bool  Moviment;
@@ -25,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        StartSpeedRun          = SpeedRun;
         Dialogue               = false;
         Moviment               = true;
         IsRight                = false;
@@ -59,15 +62,18 @@ public class PlayerController : MonoBehaviour
         {Rigidbody2D.velocity = new Vector2(PlayerControllerInputs.AxisHorizontal * SpeedRun, 
         Rigidbody2D.velocity.y);}
 
-        if(!CheckGround)
-        {Animator.SetBool("Jump", true);}else
-        {Animator.SetBool("Jump", false);}
+        if(!CheckGround){Animator.SetBool("Jump", true);}else{Animator.SetBool("Jump", false);}
 
         if(PlayerControllerInputs.KeySpace && CheckGround && !Dialogue)
-        {Rigidbody2D.AddForce(transform.up * ForceJump * Time.deltaTime, ForceMode2D.Impulse);
-        Animator.SetBool("Jump", true); Moviment = false;}
-        else if(CheckGround)
-        {Animator.SetBool("Jump", false); Moviment = true;}
+        {
+            Rigidbody2D.AddForce(transform.up * ForceJump * Time.fixedDeltaTime, ForceMode2D.Impulse); 
+            if(PlayerControllerInputs.AxisHorizontal == 0){SpeedRun = MovimentationJump;}
+            else
+            {Moviment = false;} 
+            Debug.Log(ForceJump * Time.fixedDeltaTime);
+            Animator.SetBool("Jump", true);  
+        }else if(CheckGround)
+        {Animator.SetBool("Jump", false); SpeedRun = StartSpeedRun; Moviment = true;}
 
         if(PlayerControllerInputs.AxisHorizontal != 0 && !Dialogue)
         {Animator.SetBool("Run", true);}
