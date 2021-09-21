@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerMenu : MonoBehaviour
 {
-    private Animator Animator;
-    private Vector2  NewPosition;
-    private bool     MoveNow;
+    [SerializeField]private Animator Animator;
+    [SerializeField]public  Vector3  NewPosition;
+    [SerializeField]private bool     MoveNow;
+
     void Start()
     {
         MoveNow  = false;
@@ -28,6 +29,5 @@ public class PlayerMenu : MonoBehaviour
     {
         Animator.SetBool("Run", true);
         MoveNow     = true;
-        Destroy(gameObject, 5);
     }
 }

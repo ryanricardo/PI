@@ -5,22 +5,24 @@ using UnityEngine;
 public class Enemie : MonoBehaviour
 {
     [Header("Components")]
-    private Rigidbody2D         rb2;
-    private Animator            Animator;
-    private PlayerController    PlayerController;
-    private Transform           TransformPlayerController;
+    [SerializeField]private Rigidbody2D         rb2;
+    [SerializeField]private Animator            Animator;
+    [SerializeField]private PlayerController    PlayerController;
+    [SerializeField]private Transform           TransformPlayerController;
+    [SerializeField]private Vector2             FollowPlayerController;
 
-    [Header("Variables")]
-    public                      float               Damage;
-    public                      int                 Life;
-    public                      string              CurrentStates;
-    private                     bool                Right;
-    private                     bool                Attacking;
-    private                     float               distancePlayer;
-    private                     Vector2             FollowPlayerController;
-    [HideInInspector]public     bool                Death;
-    public bool                 Hurt;
-    public  float               Speed;
+    [Header("Atributtes Enemie")]
+    [SerializeField]public                      float               Damage;
+    [SerializeField]public                      float               SpeedRun;
+    [SerializeField]private                     float               SpeedAttack;
+    [SerializeField]private                     float               distancePlayer;
+    [SerializeField]public                      int                 Life;
+    [SerializeField]public                      string              CurrentStates;
+    [SerializeField]private                     bool                Right;
+    [SerializeField]private                     bool                Attacking;
+    [SerializeField]public                      bool                Death;
+    [SerializeField]public                      bool                Hurt;
+
 
 
     void Start()
@@ -33,7 +35,6 @@ public class Enemie : MonoBehaviour
         TransformPlayerController   = FindObjectOfType<PlayerController>().transform;
         Animator                    = GetComponent<Animator>();
         rb2                         = GetComponent<Rigidbody2D>();
-
         CurrentStates               = "Idle";
     }
 
@@ -41,7 +42,7 @@ public class Enemie : MonoBehaviour
     void Update()
     {
         distancePlayer              = Vector2.Distance(transform.position, TransformPlayerController.transform.position);
-        FollowPlayerController      = Vector2.MoveTowards(transform.position, TransformPlayerController.transform.position, Speed * Time.deltaTime);
+        FollowPlayerController      = Vector2.MoveTowards(transform.position, TransformPlayerController.transform.position, SpeedRun * Time.deltaTime);
         
         
 
@@ -149,9 +150,9 @@ public class Enemie : MonoBehaviour
     IEnumerator AttackingLoop()
     {
         Animator.SetInteger("Animation", 3);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(SpeedAttack);
         Animator.SetInteger("Animation", 4);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(SpeedAttack);
         Attacking = false;
     }
 

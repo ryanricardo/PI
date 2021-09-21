@@ -4,19 +4,28 @@ using UnityEngine;
 
 public class Follow : MonoBehaviour
 {
-    [SerializeField]private Transform Target;
+    [SerializeField]public Transform Target;
     [SerializeField]private float PositionY;
     [SerializeField]private float PositionX;
+    [SerializeField]private bool  InStart;
 
     void Start()
     {
-        
+        if(InStart)
+        {
+            transform.position = new Vector3(Target.transform.position.x + PositionX, 
+            Target.transform.position.y + PositionY, 1);
+        }
     }
 
     
     void Update()
     {
-        transform.position = new Vector3(Target.transform.position.x + PositionX, 
-        PositionY, 1);
+        if(!InStart)
+        {transform.position = new Vector3(Target.transform.position.x + PositionX, 
+        Target.transform.position.y + PositionY, 1);}
+
+        
+
     }
 }

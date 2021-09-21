@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private float StartSpeedRun;
     [SerializeField]public  float ForceJump;
     [SerializeField]public  float MovimentationJump;
-    [SerializeField]private bool  IsRight;
+    [SerializeField]public  bool  IsRight;
     [SerializeField]private bool  CheckGround;
     [SerializeField]public  bool  Moviment;
     [SerializeField]public  bool  Dialogue;
@@ -124,6 +124,7 @@ public class PlayerController : MonoBehaviour
     }*/
 
     //Functions
+
     public IEnumerator DesactiveAnimations(float time)
     {
         yield return new WaitForSeconds(time);

@@ -89,7 +89,7 @@ public class Dialogue : MonoBehaviour
         {
             yield return new WaitForSeconds(TimeNextDialogue);
             CountDialogue += 1;
-            TextDialogue.text = NameObject + ": " + TypesDialogues[CountDialogue];
+            TextDialogue.text = NameObject + " \n\n" + TypesDialogues[CountDialogue];
         }while(CountDialogue < LimitCountDialogue);
 
     }

@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour
 {
+    [Header("Components")]
     [SerializeField]private PlayerControllerInputs PlayerControllerInputs;
     [SerializeField]private PlayerController PlayerController;
     [SerializeField]private Animator         Animator;
-    [SerializeField]private GameObject       PickupJump;
+    [SerializeField]private GameObject       ItemPickup;
     [SerializeField]private GameObject       HandIcon;
+    [Header("Atributtes Chest")]
     [SerializeField]private bool             OneTime;
+    [SerializeField]private float            PositionSpawnItem;
     
 
     void Start()
@@ -29,8 +32,8 @@ public class Chest : MonoBehaviour
         {
             HandIcon.SetActive(false);
             Animator.SetTrigger("Open");
-            Vector2 SpawnPickup = new Vector2(transform.position.x, transform.position.y + 5);
-            Instantiate(PickupJump, SpawnPickup, Quaternion.identity);
+            Vector2 SpawnPickup = new Vector2(transform.position.x, transform.position.y + PositionSpawnItem);
+            Instantiate(ItemPickup, SpawnPickup, Quaternion.identity);
             OneTime = false;
         }
     }

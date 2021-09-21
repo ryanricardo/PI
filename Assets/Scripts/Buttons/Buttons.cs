@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Buttons : MonoBehaviour
 {
 
-    private PlayerMenu PlayerMenu;
+    [SerializeField]private PlayerMenu PlayerMenu;
+    [SerializeField]private TextMeshProUGUI TextButtonEntrar;
+    [SerializeField]private GameObject      ImageHUD;
+    [SerializeField]private int             SceneCount;
+   
+    
     void Start()
     {
         PlayerMenu = FindObjectOfType<PlayerMenu>();
@@ -15,13 +21,27 @@ public class Buttons : MonoBehaviour
     
     void Update()
     {
-        
+        SceneCount = SceneManager.sceneCount;
+        if(PlayerMenu.transform.position.x == PlayerMenu.NewPosition.x)
+        {SceneManager.LoadScene("Scene 0"); Destroy(PlayerMenu.gameObject);}
+    }
+
+    public void UpdateExitMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void UpdateExitGame()
+    {
+        Application.Quit();
     }
 
     public void UpdateEntrar()
     {
-        StartCoroutine(LoadScene());
         PlayerMenu.Move();
+        StartCoroutine(StartLoading());
+
+
     }
 
     public void UpdateSair()
@@ -29,9 +49,27 @@ public class Buttons : MonoBehaviour
         Application.Quit();
     }
 
-    IEnumerator LoadScene()
+    public void UpdateOptions()
     {
-        yield return new WaitForSeconds(5);
-        SceneManager.LoadScene("Scene 0");
+        ImageHUD.SetActive(true);
     }
+    public void UpdateExitOptions()
+    {
+        ImageHUD.SetActive(false);
+    }
+
+    IEnumerator StartLoading()
+    {
+        do
+        {
+            yield return new WaitForSeconds(0.5f);
+            TextButtonEntrar.text = "Loading.";
+            yield return new WaitForSeconds(0.5f);
+            TextButtonEntrar.text = "Loading..";
+            yield return new WaitForSeconds(0.5f);
+            TextButtonEntrar.text = "Loading...";
+        }while(SceneManager.sceneCount == 1);
+
+    }
+
 }
