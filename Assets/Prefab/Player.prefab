@@ -55,7 +55,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 11411879b4ccf404fb9e1d627861f0b2, type: 2}
+  - {fileID: 2100000, guid: 252b881528d001f448348c020bf3beeb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -121,23 +121,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4efdd6b9fcb29554a84f2232beb024cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpeedRun: 0
+  StartSpeedRun: 0
+  ForceJump: 0
+  MovimentationJump: 0
+  IsRight: 0
+  CheckGround: 0
+  Moviment: 0
+  Dialogue: 0
+  Life: 0
+  TimeFallHeight: 0
+  DamageHeight: 0
+  PlayerControllerInputs: {fileID: 0}
+  Rigidbody2D: {fileID: 0}
   Animator: {fileID: 3099231311161371769}
   TransformCheckGround: {fileID: 3099231311834314791}
-  AudioSource: {fileID: 1369419931986778273}
-  Clips:
-  - {fileID: 8300000, guid: 42c259376a5dc684685a025e5bb5fd90, type: 3}
-  - {fileID: 8300000, guid: 86be108e3cde2e843b5b6a8ebe2faf71, type: 3}
-  rb2: {fileID: 0}
-  MouseButtonFire0: 0
-  MouseButtonFire1: 0
-  KeyCodeEDown: 0
-  KeyCodeSpaceDown: 0
-  Speed: 3
-  Life: 0
-  ForceJump: 0
-  Hurt: 0
-  Moviment: 0
-  Death: 0
 --- !u!95 &3099231311161371769
 Animator:
   serializedVersion: 3

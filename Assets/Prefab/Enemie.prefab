@@ -54,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 252b881528d001f448348c020bf3beeb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -165,12 +165,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf4d3f909cdcc6c4f8fe21e9e77ad293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb2: {fileID: 0}
+  Animator: {fileID: 0}
+  PlayerController: {fileID: 0}
+  TransformPlayerController: {fileID: 0}
+  FollowPlayerController: {x: 0, y: 0}
   Damage: 2
+  SpeedRun: 0
+  SpeedAttack: 0
+  distancePlayer: 0
   Life: 5
   CurrentStates: 
+  Right: 0
+  Attacking: 0
   Death: 0
   Hurt: 0
-  Speed: 2
 --- !u!114 &7089227410418050289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,4 +205,5 @@ MonoBehaviour:
   TimeNextDialogue: 0
   PlayMusic: 0
   StartTalk: 0
+  PlayOneTime: 0
   Music: 0
