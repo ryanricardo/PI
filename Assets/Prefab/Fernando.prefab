@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 11411879b4ccf404fb9e1d627861f0b2, type: 2}
+  - {fileID: 2100000, guid: 252b881528d001f448348c020bf3beeb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -143,10 +143,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StatesCurrent: 0
-  TypeBots: 0
   PlayerController: {fileID: 0}
   TextDialogue: {fileID: 0}
   GameObjectTalk: {fileID: 0}
+  NameObject: 
   DistancePlayer: 0
   MinimiumDistance: 4
   TypesDialogues:
@@ -159,6 +159,8 @@ MonoBehaviour:
   - Siga em frente...
   CountDialogue: 3
   LimitCountDialogue: 3
+  TimeNextDialogue: 0
   PlayMusic: 0
   StartTalk: 0
+  PlayOneTime: 0
   Music: 0

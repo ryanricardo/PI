@@ -77,6 +77,8 @@ public class Dialogue : MonoBehaviour
     }
     // Functions
 
+
+
     void Observer()
     {
         DistancePlayer = Vector2.Distance(transform.position, PlayerController.transform.position);

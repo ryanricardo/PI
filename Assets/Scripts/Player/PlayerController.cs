@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]public  bool  Dialogue;
     [Header("Atributtes Life")]
     [SerializeField]public  float Life;
+    [SerializeField]public  float TimeHurt;
+    [Header("Atributtes Combat")]
+    [SerializeField]public float Damage;
     [Header("Atributtes Extern")]
     [SerializeField]private float TimeFallHeight;
     [SerializeField]private bool  DamageHeight;
@@ -90,15 +93,15 @@ public class PlayerController : MonoBehaviour
     
     void Combat()
     {
-        if(Dialogue || !Moviment){return;}
-
         if(PlayerControllerInputs.Mouse1)
         {
+            Rigidbody2D.velocity = Vector2.zero;
             Animator.SetBool("CombatIdle", true);
             if(PlayerControllerInputs.Mouse0)
             {Animator.SetBool("Attack", true);StartCoroutine(DesactiveAnimations(0.5f));}
         }else 
-        {Animator.SetBool("CombatIdle", false);}
+        {Animator.SetBool("CombatIdle", false);
+}
     }
 
     void CheckDeath()
@@ -132,6 +135,17 @@ public class PlayerController : MonoBehaviour
         StopCoroutine(DesactiveAnimations(0));
     }
 
+    public IEnumerator Hurt()
+    {
+        do
+        {
+            Rigidbody2D.velocity = Vector2.zero;
+        }while(Animator.GetBool("Hurt"));
+        Animator.SetBool("Hurt", true);
+        yield return new WaitForSeconds(TimeHurt);
+        Animator.SetBool("Hurt", false);
+    }
+
     public void FunctionDeath()
     {
         Animator.SetBool("Death", true);
@@ -141,9 +155,11 @@ public class PlayerController : MonoBehaviour
     public void Hit(float damage)
     {
         Life -= damage;
-        Debug.Log(Life);
+        StartCoroutine(Hurt());
     }
 
+
+    
     public void StartDialogue()
     {
         Rigidbody2D.velocity = Vector2.zero;

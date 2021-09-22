@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Enemie : MonoBehaviour
 {
@@ -9,14 +10,18 @@ public class Enemie : MonoBehaviour
     [SerializeField]private Animator            Animator;
     [SerializeField]private PlayerController    PlayerController;
     [SerializeField]private Transform           TransformPlayerController;
+    [SerializeField]private TextMeshProUGUI     TextLife;
     [SerializeField]private Vector2             FollowPlayerController;
+    
 
     [Header("Atributtes Enemie")]
     [SerializeField]public                      float               Damage;
     [SerializeField]public                      float               SpeedRun;
     [SerializeField]private                     float               SpeedAttack;
     [SerializeField]private                     float               distancePlayer;
-    [SerializeField]public                      int                 Life;
+    [SerializeField]private                     float               MinimalDistancePlayer;
+    [SerializeField]public                      float               Life;
+    [SerializeField]public                      float               TimeHurt;
     [SerializeField]public                      string              CurrentStates;
     [SerializeField]private                     bool                Right;
     [SerializeField]private                     bool                Attacking;
@@ -43,8 +48,8 @@ public class Enemie : MonoBehaviour
     {
         distancePlayer              = Vector2.Distance(transform.position, TransformPlayerController.transform.position);
         FollowPlayerController      = Vector2.MoveTowards(transform.position, TransformPlayerController.transform.position, SpeedRun * Time.deltaTime);
-        
-        
+        TextLife.text               = Life.ToString();
+        if(Life <= 0){Life = 0;}
 
         if((transform.position.x - TransformPlayerController.transform.position.x) < 0 && !Right)
         {
@@ -68,10 +73,12 @@ public class Enemie : MonoBehaviour
             break;
 
             case "Idle":
+            Hurt = true;
             UpdateIdle();
             break;
 
             case "Stalking":
+            Hurt = true;
             UpdateStalking();
             break;
 
@@ -97,7 +104,7 @@ public class Enemie : MonoBehaviour
         
         Animator.SetInteger("Animation", 0);
 
-        if(distancePlayer <= 5){CurrentStates = "Stalking";}
+        if(distancePlayer <= MinimalDistancePlayer){CurrentStates = "Stalking";}
     }
 
     void UpdateStalking()
@@ -127,7 +134,7 @@ public class Enemie : MonoBehaviour
         }else 
         {
             StopCoroutine(AttackingLoop());
-            if(distancePlayer <= 5 && !Attacking)
+            if(distancePlayer <= MinimalDistancePlayer && !Attacking)
             {
                CurrentStates = "Stalking";
             }else if(!Attacking)
@@ -138,14 +145,31 @@ public class Enemie : MonoBehaviour
     }
 
     
+    public void Hit(float damage)
+    {
+        Life -= damage;
+        CurrentStates = "Hurt";
 
+    }
 
     IEnumerator HurtLoop()
     {
         Animator.SetInteger("Animation", 5);
-        Life -= 1;
-        yield return new WaitForSeconds(0.5f);
-        CurrentStates = "Attacking";
+        yield return new WaitForSeconds(TimeHurt);
+        if(distancePlayer <= MinimalDistancePlayer)
+        {
+            CurrentStates = "Stalking";
+        }
+        else
+        {
+            if(distancePlayer <= 1)
+            {
+                CurrentStates = "Attack";
+            }else 
+            {
+                CurrentStates = "Idle";
+            }
+        }
     }
     IEnumerator AttackingLoop()
     {
