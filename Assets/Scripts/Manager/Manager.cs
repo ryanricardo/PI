@@ -8,6 +8,7 @@ public class Manager : MonoBehaviour
     
     private     Enemie              Enemie;
     private     PlayerController    PlayerController;
+    [SerializeField]private     BoxCollider2D       Victory;
 
     void Start()
     {
@@ -31,5 +32,13 @@ public class Manager : MonoBehaviour
         Enemie.CurrentStates = "Empty";
         yield return new WaitForSeconds(time);
         SceneManager.LoadScene("Loose");
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.CompareTag("Player") == Victory)
+        {
+            Debug.Log("Vicotory");
+        }
     }
 }
