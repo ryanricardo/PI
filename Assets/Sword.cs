@@ -33,10 +33,10 @@ public class Sword : MonoBehaviour
         switch(typeUserSword)
         {
             case TypeUserSword.Player:
-            if(other.gameObject.CompareTag("Enemie"))
+            if(other.gameObject.CompareTag("Enemie") && AnimatorPlayer.GetBool("Attack"))
             {
                 Debug.Log("Acertou!");
-                Enemie.Hit(PlayerController.Damage);
+                other.gameObject.GetComponent<Enemie>().Hit(PlayerController.Damage);
             }
             break;
 

@@ -23,6 +23,7 @@ public class Enemie : MonoBehaviour
     [SerializeField]public                      float               Life;
     [SerializeField]public                      float               TimeHurt;
     [SerializeField]public                      string              CurrentStates;
+    [SerializeField]public                      bool                HitOneTime;
     [SerializeField]private                     bool                Right;
     [SerializeField]private                     bool                Attacking;
     [SerializeField]public                      bool                Death;
@@ -32,6 +33,7 @@ public class Enemie : MonoBehaviour
 
     void Start()
     {
+        HitOneTime                  = true;
         Attacking                   = false;
         Death                       = false;
         Right                       = true;
@@ -88,7 +90,7 @@ public class Enemie : MonoBehaviour
             break;
 
             case "Hurt":
-            if(Hurt){StartCoroutine(HurtLoop()); Hurt = false;}
+            if(Hurt){StartCoroutine(HurtLoop()); Hurt = false; }
             break;
 
             case "Death":
@@ -149,15 +151,19 @@ public class Enemie : MonoBehaviour
     
     public void Hit(float damage)
     {
-        Life -= damage;
-        CurrentStates = "Hurt";
-
+        if(HitOneTime)
+        {
+            Life -= damage;
+            CurrentStates = "Hurt";
+            HitOneTime = false;
+        }
     }
 
     IEnumerator HurtLoop()
     {
         Animator.SetInteger("Animation", 5);
         yield return new WaitForSeconds(TimeHurt);
+        HitOneTime = true;
         if(distancePlayer <= MinimalDistancePlayer)
         {
             CurrentStates = "Stalking";
