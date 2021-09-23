@@ -22,6 +22,7 @@ public class PlayerControllerColisions : MonoBehaviour
         if(other.gameObject.CompareTag("Underground"))
         {
             FindObjectOfType<AudioController>().SourceAmbient.pitch = -0.5f;
+            FindObjectOfType<AudioController>().SourceAmbient.volume = 0.1f;
         }
     }
 
@@ -30,6 +31,7 @@ public class PlayerControllerColisions : MonoBehaviour
         if(other.gameObject.CompareTag("Underground"))
         {
             FindObjectOfType<AudioController>().SourceAmbient.pitch = 1f;
+            FindObjectOfType<AudioController>().SourceAmbient.volume = PlayerPrefs.GetFloat("VolumeMusic");
         }
     }
 

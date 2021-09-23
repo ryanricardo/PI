@@ -8,15 +8,16 @@ public class Item : MonoBehaviour
     {
         JumpMore,
         TorchFire,
+        DamageMore,
     }
 
     [Header("Atributtes Item;")]
     [SerializeField]private TypeItem        typeItem;
     [SerializeField]private float           ValueReward;
-    [SerializeField]private bool            Colision;
     [Header("Components")]
     [SerializeField]private PlayerController PlayerController;
     [SerializeField]private GameObject       TorchWeapon;
+
         
     void Start()
     {
@@ -44,12 +45,20 @@ public class Item : MonoBehaviour
                 Instantiate(TorchWeapon, transform.position, Quaternion.identity);
                 Destroy(gameObject, 0);
                 break;
+
+                case TypeItem.DamageMore:
+                FindObjectOfType<PlayerController>().Damage += 2;
+                FindObjectOfType<Hud>().ReceiveItem("Damage + " , ValueReward);
+                Destroy(gameObject, 0);
+                break;
             }
         }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if(other.gameObject.CompareTag("Player"))
+        {
             switch(typeItem)
             {
                 case TypeItem.JumpMore:
@@ -58,7 +67,10 @@ public class Item : MonoBehaviour
                 Destroy(gameObject, 0);
                 break;
                 
+
             }
+        }
+
     }
 }
 

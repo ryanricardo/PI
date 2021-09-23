@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]public  float TimeHurt;
     [Header("Atributtes Combat")]
     [SerializeField]public float Damage;
+    [SerializeField]public float SpeedAttack;
     [Header("Atributtes Extern")]
     [SerializeField]private float TimeFallHeight;
     [SerializeField]private bool  DamageHeight;
@@ -27,6 +28,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private Rigidbody2D            Rigidbody2D;
     [SerializeField]private Animator               Animator;
     [SerializeField]private Transform              TransformCheckGround;
+    [SerializeField]private AudioSource            SourceEffects;
+    [SerializeField]private AudioClip              SwordEffect;
 
     void Start()
     {
@@ -97,8 +100,9 @@ public class PlayerController : MonoBehaviour
         {
             Rigidbody2D.velocity = Vector2.zero;
             Animator.SetBool("CombatIdle", true);
-            if(PlayerControllerInputs.Mouse0)
-            {Animator.SetBool("Attack", true);StartCoroutine(DesactiveAnimations(0.5f));}
+            if(PlayerControllerInputs.Mouse0 && !Animator.GetBool("Attack"))
+            {SourceEffects.PlayOneShot(SwordEffect);Animator.SetBool("Attack", true);
+            StartCoroutine(DesactiveAnimations(SpeedAttack));}
         }else 
         {Animator.SetBool("CombatIdle", false);
 }
@@ -132,7 +136,7 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         Animator.SetBool("Attack", false);
-        StopCoroutine(DesactiveAnimations(0));
+        StopCoroutine(DesactiveAnimations(time));
     }
 
     public IEnumerator Hurt()

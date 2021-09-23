@@ -56,7 +56,12 @@ public class Dialogue : MonoBehaviour
         {
             case EStates.NoTalking:
                 if(PlayOneTime)
-                {PlayerController.Dialogue = false; PlayerController.Moviment = true; PlayOneTime = false;}
+                {
+                    PlayerController.Dialogue = false; 
+                    PlayerController.Moviment = true; 
+                    FindObjectOfType<AudioController>().SourceAmbient.volume = PlayerPrefs.GetFloat("VolumeMusic");
+                    PlayOneTime = false;
+                    }
                 TextDialogue.gameObject.SetActive(false);
                 if(DistancePlayer <= MinimiumDistance && StartTalk)
                 StatesCurrent = EStates.Talking;
@@ -68,7 +73,11 @@ public class Dialogue : MonoBehaviour
                 TextDialogue.gameObject.SetActive(true);
                 GameObjectTalk.SetActive(false);
                 if(StartTalk){StartCoroutine(StartTalking()); StartTalk = false;}
-                if(PlayMusic){FindObjectOfType<AudioController>().PlayMusic(Music); PlayMusic = false;
+                if(PlayMusic)
+                {
+                    FindObjectOfType<AudioController>().PlayMusic(Music);
+                    FindObjectOfType<AudioController>().SourceAmbient.volume = 0;
+                    PlayMusic = false;
                 }else if(CountDialogue >= LimitCountDialogue)
                 {StatesCurrent = EStates.NoTalking;}
             break;

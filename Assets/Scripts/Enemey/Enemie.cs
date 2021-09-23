@@ -62,7 +62,7 @@ public class Enemie : MonoBehaviour
         }
 
         if(Life <= 0){CurrentStates = "Death";}
-
+        if(PlayerController.Life <= 0 ){CurrentStates = "Empty";}
 
 
 
@@ -92,7 +92,9 @@ public class Enemie : MonoBehaviour
             break;
 
             case "Death":
-            if(!Death){Animator.SetInteger("Animation", 6); Destroy(gameObject, 3); Death = true;}
+            if(!Death)
+            {Animator.SetInteger("Animation", 6); Destroy(gameObject, 3); Death = true;
+            TextLife.gameObject.SetActive(false);}
             break;
         }
 

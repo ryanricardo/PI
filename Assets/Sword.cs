@@ -33,7 +33,7 @@ public class Sword : MonoBehaviour
         switch(typeUserSword)
         {
             case TypeUserSword.Player:
-            if(other.gameObject.CompareTag("Enemie") && AnimatorPlayer.GetBool("Attack"))
+            if(other.gameObject.CompareTag("Enemie"))
             {
                 Enemie.Hit(PlayerController.Damage);
             }
@@ -43,7 +43,6 @@ public class Sword : MonoBehaviour
             if(other.gameObject.CompareTag("Player") && AnimatorEnemie.GetInteger("Animation") == 4)
             {
                 PlayerController.Hit(Enemie.Damage);
-                Debug.Log("s");
             }
             break;
         }
