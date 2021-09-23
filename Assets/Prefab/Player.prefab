@@ -353,7 +353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpeedRun: 3.3
   StartSpeedRun: 0
-  ForceJump: 35
+  ForceJump: 33
   MovimentationJump: 3
   IsRight: 0
   CheckGround: 0

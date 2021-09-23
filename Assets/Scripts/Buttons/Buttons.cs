@@ -36,10 +36,17 @@ public class Buttons : MonoBehaviour
         Application.Quit();
     }
 
-    public void UpdateEntrar()
+    public void UpdateEntrarMenu()
     {
         PlayerMenu.Move();
         StartCoroutine(StartLoading());
+
+
+    }
+
+    public void UpdateEntrar()
+    {
+        SceneManager.LoadScene("Scene 0");
 
 
     }

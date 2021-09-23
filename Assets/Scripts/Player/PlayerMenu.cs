@@ -6,12 +6,15 @@ public class PlayerMenu : MonoBehaviour
 {
     [SerializeField]private Animator Animator;
     [SerializeField]public  Vector3  NewPosition;
+    [SerializeField]public  Vector3  StartPosition;
     [SerializeField]private bool     MoveNow;
 
     void Start()
     {
         MoveNow  = false;
         Animator = GetComponent<Animator>();
+        StartPosition = transform.position;
+        transform.position = StartPosition;
     }
 
     

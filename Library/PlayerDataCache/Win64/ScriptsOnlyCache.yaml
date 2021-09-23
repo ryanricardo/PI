@@ -12,12 +12,14 @@ ScriptsOnlyBuild:
     - HUDMenu
     - Hud
     - Item
+    - Manager
     - PlayerController
     - PlayerControllerColisions
     - PlayerControllerInputs
     - PlayerMenu
     - Sword
     - TorchFollow
+    - TrapFall
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
     - UnityEditor.Tilemaps.GridBrushEditor
@@ -56,6 +58,57 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Image
     - UnityEngine.UI.Slider
   sceneClasses:
+    Assets/Scenes/Loose.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 11278}
+    - Class: 114
+      Script: {instanceID: 11498}
+    - Class: 114
+      Script: {instanceID: 11928}
+    - Class: 114
+      Script: {instanceID: 12308}
+    - Class: 114
+      Script: {instanceID: 12380}
+    - Class: 114
+      Script: {instanceID: 12634}
+    - Class: 114
+      Script: {instanceID: 12860}
+    - Class: 114
+      Script: {instanceID: 12934}
+    - Class: 114
+      Script: {instanceID: 13332}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
     Assets/Scenes/Menu.unity:
     - Class: 1
       Script: {instanceID: 0}
@@ -110,11 +163,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12934}
     - Class: 114
-      Script: {instanceID: 13114}
+      Script: {instanceID: 13116}
     - Class: 114
-      Script: {instanceID: 13330}
+      Script: {instanceID: 13332}
     - Class: 114
-      Script: {instanceID: 13364}
+      Script: {instanceID: 13366}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -217,9 +270,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12934}
     - Class: 114
-      Script: {instanceID: 13150}
+      Script: {instanceID: 12970}
     - Class: 114
-      Script: {instanceID: 13330}
+      Script: {instanceID: 13102}
+    - Class: 114
+      Script: {instanceID: 13152}
+    - Class: 114
+      Script: {instanceID: 13332}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -505,7 +562,7 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAnimator
   - hash:
       serializedVersion: 2
-      Hash: 5cb424ec3572f2ffee14b514ca6a0cfc
+      Hash: 1e7974ae1498a7593c9bca049b4e6b18
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ActiveMusic
@@ -631,7 +688,7 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
-      Hash: 2753a0eda2eddbe3415a1043666f6c59
+      Hash: c4393bc99a3ba5158aa8c33cb91a5c1e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerMenu
@@ -673,7 +730,7 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 6bb568b47ee7389084b9df089259ff70
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Manager
@@ -683,6 +740,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: MarkerTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TrapFall
   - hash:
       serializedVersion: 2
       Hash: 800c50acba124432abb4cf0d47202e06
@@ -795,4 +858,5 @@ ScriptsOnlyBuild:
   scenePathNames:
   - Assets/Scenes/Menu.unity
   - Assets/Scenes/Scene 0.unity
+  - Assets/Scenes/Loose.unity
   playerPath: C:/Users/RyanR/OneDrive/Documents/GitHub/PI/Build/Projeto-Teste.exe

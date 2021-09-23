@@ -238,6 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Animator: {fileID: 0}
   NewPosition: {x: 0, y: 0, z: 0}
+  StartPosition: {x: 0, y: 0, z: 0}
   MoveNow: 0
 --- !u!1 &98040246
 GameObject:
@@ -1950,7 +1951,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1510629499}
-        m_MethodName: UpdateEntrar
+        m_MethodName: UpdateEntrarMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

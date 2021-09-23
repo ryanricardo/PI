@@ -930,7 +930,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1384055288}
-        m_MethodName: UpdateExitGame
+        m_MethodName: UpdateExitMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

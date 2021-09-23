@@ -35,6 +35,7 @@ public class Sword : MonoBehaviour
             case TypeUserSword.Player:
             if(other.gameObject.CompareTag("Enemie"))
             {
+                Debug.Log("Acertou!");
                 Enemie.Hit(PlayerController.Damage);
             }
             break;
