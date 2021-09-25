@@ -28,6 +28,7 @@ public class Enemie : MonoBehaviour
     [SerializeField]private                     bool                Attacking;
     [SerializeField]public                      bool                Death;
     [SerializeField]public                      bool                Hurt;
+    [SerializeField]public                      bool                BossDeath;
 
 
 
@@ -48,6 +49,7 @@ public class Enemie : MonoBehaviour
     
     void Update()
     {
+        BossDeath                   = Life <= 0 ? true : false;
         distancePlayer              = Vector2.Distance(transform.position, TransformPlayerController.transform.position);
         FollowPlayerController      = Vector2.MoveTowards(transform.position, TransformPlayerController.transform.position, SpeedRun * Time.deltaTime);
         TextLife.text               = Life.ToString();

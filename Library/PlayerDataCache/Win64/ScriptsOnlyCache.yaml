@@ -307,6 +307,57 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 1839735485
       Script: {instanceID: 0}
+    Assets/Scenes/Win.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 11278}
+    - Class: 114
+      Script: {instanceID: 11498}
+    - Class: 114
+      Script: {instanceID: 11928}
+    - Class: 114
+      Script: {instanceID: 12308}
+    - Class: 114
+      Script: {instanceID: 12380}
+    - Class: 114
+      Script: {instanceID: 12634}
+    - Class: 114
+      Script: {instanceID: 12860}
+    - Class: 114
+      Script: {instanceID: 12934}
+    - Class: 114
+      Script: {instanceID: 13332}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
   scriptHashData:
   - hash:
       serializedVersion: 2
@@ -340,7 +391,7 @@ ScriptsOnlyBuild:
     className: TMP_Dropdown
   - hash:
       serializedVersion: 2
-      Hash: 93fcbc54570d7275d394f2cd205a688c
+      Hash: cd00fa4fdf41dc320f6dccf778628cbb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Enemie
@@ -580,7 +631,7 @@ ScriptsOnlyBuild:
     className: AudioController
   - hash:
       serializedVersion: 2
-      Hash: 30bb1783d62c3c04c308e653bfabeaf2
+      Hash: 1444da75cde99b4f9c83b12724398560
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Buttons
@@ -730,7 +781,7 @@ ScriptsOnlyBuild:
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
-      Hash: 6bb568b47ee7389084b9df089259ff70
+      Hash: c9a76fe9081dd7fa822928080deaea50
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Manager
@@ -859,4 +910,5 @@ ScriptsOnlyBuild:
   - Assets/Scenes/Menu.unity
   - Assets/Scenes/Scene 0.unity
   - Assets/Scenes/Loose.unity
+  - Assets/Scenes/Win.unity
   playerPath: C:/Users/RyanR/OneDrive/Documents/GitHub/PI/Build/Projeto-Teste.exe

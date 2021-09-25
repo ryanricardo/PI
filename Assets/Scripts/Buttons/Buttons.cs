@@ -10,6 +10,7 @@ public class Buttons : MonoBehaviour
     [SerializeField]private PlayerMenu PlayerMenu;
     [SerializeField]private TextMeshProUGUI TextButtonEntrar;
     [SerializeField]private GameObject      ImageHUD;
+    [SerializeField]private GameObject      ImageHUDControles;
     [SerializeField]private int             SceneCount;
    
     
@@ -54,6 +55,15 @@ public class Buttons : MonoBehaviour
     public void UpdateSair()
     {
         Application.Quit();
+    }
+    public void UpdateControles()
+    {
+        ImageHUDControles.SetActive(true);
+    }
+
+    public void UpdateExitControles()
+    {
+        ImageHUDControles.SetActive(false);
     }
 
     public void UpdateOptions()

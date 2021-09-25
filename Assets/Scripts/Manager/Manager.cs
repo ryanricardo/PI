@@ -8,10 +8,13 @@ public class Manager : MonoBehaviour
     
     private     Enemie              Enemie;
     private     PlayerController    PlayerController;
+    public      GameObject          Boss;
+    private     bool                pass;
     [SerializeField]private     BoxCollider2D       Victory;
 
     void Start()
     {
+        pass                = false;
         Enemie              =   FindObjectOfType<Enemie>();    
         PlayerController    =   FindObjectOfType<PlayerController>();
     }
@@ -19,6 +22,7 @@ public class Manager : MonoBehaviour
    
     void Update()
     {
+        pass = Boss.GetComponent<Enemie>().BossDeath ? true : false;
         if(PlayerController.Life <= 0)
         {
             StartCoroutine(PlayerDeath(3));
@@ -36,9 +40,9 @@ public class Manager : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.CompareTag("Player") == Victory)
+        if(other.gameObject.CompareTag("Player") == Victory && pass)
         {
-            Debug.Log("Vicotory");
+           SceneManager.LoadScene("Win");
         }
     }
 }
